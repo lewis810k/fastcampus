@@ -34,3 +34,37 @@
 - 한 줄의 명령어로 `add`와 `commit`을 동시에 할 수 있다.   
 
 > git commit -a -m “한 번에 커밋하기”   
+
+![commit_5](https://s24.postimg.org/tgjdp7set/commit_5.png)   
+- git log 내용: 누가 언제 어떤 이유에서 해당 커밋을 진행했는지 내용 출력   
+- 16진수로 표시된 **commit number**를 통해 `merge`, `revert`, `reset` 등을 진행   
+
+![commit_6](https://s24.postimg.org/qnq656s2d/commit_6.png)   
+- `add` 되었던 내용을 다시 *stage*로 내릴 수 있다.    
+
+-
+
+### RESET, REVERT   
+
+`reset`이나 `revert`를 사용할 경우 꼬이거나 추적하기 힘들어지는 경우가 많아지기 때문에 문제가 발생한 부분을 새로 수정해서 `commit`하는 경우가 더 많다.  
+
+-
+
+### gitignore
+
+git에서 관리가 되지 않아도 될 파일들의 목록을 저장하는 파일   
+목록에 있는 파일들은 변경사항을 추적하지 않아 stage로 올라가지 않도록 해준다.   
+![commit_7](https://s27.postimg.org/5xydg8g7n/commit_7.png)   
+- 우리가 쓸 것으로 예상되는 모든 tool과 system을 입력한다.   
+- generate를 누르면 각 항목에서 제외되어야 목록이 생성된다.   
+- 생성된 내용들을 .gitignore 파일에 추가한다.  
+
+> 주의사항 : 이 작업은 반드시 git init(local repository 생성) 하자마자 해야 한다. 컴퓨터 환경에 따라 쓰레기 파일들을 생성하기 때문에 .gitignore에서 처리해 주지 않고 다른 사람의 작업을 pull하면 conflict가 발생한다.  이 사항만 지켜도 불필요한 conflict를 미연에 방지할 수 있다.   
+
+-
+
+### CLONE
+
+![commit_8](https://s27.postimg.org/5waxec077/commit_8.png)   
+- git 디렉토리가 **`clone`될 디렉토리로 이동**해서 `git clone [address]`을 입력한다.   
+

@@ -26,4 +26,6 @@
 
 ![branch_4](https://s24.postimg.org/6jbwd3udx/branch_4.png)  
 
-![branch_5](https://s24.postimg.org/jorej7o9h/branch_5.png)
+![branch_5](https://s24.postimg.org/jorej7o9h/branch_5.png)   
+fix의 내용을 html로 merge하기 위해, fix의 커밋번호를 복사한 후, html branch에서 merge를 하면 fix 내용이 반영된다.
+Fix (merge) html 한 다음 feature (merge) html하면 충돌이 난다. 해당 충돌을 해결 한 다음에는 html의 내용이  fix, feature와 다르기 때문에 fix, feature에서 각각 html의 정보를 merge해온다. 결국 html, fix, feature 가 동기화 된다.

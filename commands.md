@@ -23,7 +23,7 @@
 - tab키 자동완성   
   : 하위 디렉토리 이름이 ‘apple_in_the_tree’라고 할 때 a + tab만 입력해도 전체 이름이 자동완성된다. 만약 ‘application’이라는 하위 디렉토리가 존재한다면 apple + tab을 입력하면 전체 이름이 자동완성된다.   
 
-리눅스 명령어 정리
+**리눅스 명령어 정리**   
 <http://www.mireene.com/webimg/linux_tip1.htm>
 
 ### git 기본 명령어

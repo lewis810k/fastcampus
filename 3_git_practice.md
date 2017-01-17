@@ -60,6 +60,8 @@ git에서 관리가 되지 않아도 될 파일들의 목록을 저장하는 파
 - 생성된 내용들을 .gitignore 파일에 추가한다.  
 
 > 주의사항 : 이 작업은 반드시 git init(local repository 생성) 하자마자 해야 한다. 컴퓨터 환경에 따라 쓰레기 파일들을 생성하기 때문에 .gitignore에서 처리해 주지 않고 다른 사람의 작업을 pull하면 conflict가 발생한다.  이 사항만 지켜도 불필요한 conflict를 미연에 방지할 수 있다.   
+- `working directory 생성` > `git init` > **`.gitignore 추가`** > `initial commit`
+
 
 -
 

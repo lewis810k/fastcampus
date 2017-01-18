@@ -18,6 +18,8 @@ computer : **계산**능력을 가진 모든 장치, 데이터와 명령어를 �
 
 ![first_gen_computer](https://sites.google.com/site/fun21stcomputer/_/rsrc/1355060064429/howcomhome/history/785px-Eniac.jpg?height=305&width=400)
 
+-
+
 #### 제 2세대 컴퓨터(1959 ~ 1965) : 냉전시대 초기
 - 소자 : 트랜지스터
 - 용도 : 사무, 과학기술
@@ -27,6 +29,8 @@ computer : **계산**능력을 가진 모든 장치, 데이터와 명령어를 �
 
 ![second_gen_computer](http://theevolutionofcomputersovertime.weebly.com/uploads/4/2/2/0/42204035/2146864_orig.png)
 
+-
+
 #### 제 3세대 컴퓨터(1965 ~ 1970) : 컴퓨터 소형화
 - 소자 : 집적회로(IC)
 - 다리 하나가 전선 하나를 대체함, 소형, 저가, 고속
@@ -35,12 +39,16 @@ computer : **계산**능력을 가진 모든 장치, 데이터와 명령어를 �
 
 ![third_gen_computer](http://3.bp.blogspot.com/-mBJa4CDd3L0/VLiGUNP6wzI/AAAAAAAAADM/ZW7XLu3v5xk/s1600/tg.jpg)  
 
+-
+
 #### 제 4세대 컴퓨터(1971 ~ 1983)
 - 소자 : 고밀도 집적회로
 - 마이크로 프로세서 탑재 : Intel CPU
 - 컴퓨터 소형화 및 가정용 PC 보급
 
 ![fourth_gen_computer](http://4.bp.blogspot.com/-QK9Id-OKRl8/Togf_0RYd_I/AAAAAAAAAAw/HCX-OJ0eG4g/s1600/4th+gene.jpg)
+
+-
 
 #### 제 5세대 컴퓨터(1984 ~ )
 - 소자 : 초고밀도 집적회로
@@ -62,17 +70,23 @@ computer : **계산**능력을 가진 모든 장치, 데이터와 명령어를 �
  
 ![input_device](http://passnownow.com/wp-content/uploads/2015/10/Input-Devices.jpg)   
 
+-
+
 ##### 2. 출력장치
 - 컴퓨터의 정보 및 처리 결과를 외부 장치로 내보내는 장치
 - 스피커, 모니터, 프린터 등
  
 ![output_device](http://studentcms.ise.canberra.edu.au/itw/kellkings/wp-content/uploads/sites/52/2014/04/Output-Devices.jpg)
 
+-
+
 ##### 3. 처리장치(제어, 연산)
 - 컴퓨터가 계산 및 처리를 위해 사용하는 장치
 - CPU(Central Processing Unit)
 	
 ![CPU](https://www.bhphotovideo.com/images/images1000x1000/intel_bx80646i54690k_core_i5_4690k_processor_1060511.jpg)
+
+-
 
 ##### 4. 기억장치
  

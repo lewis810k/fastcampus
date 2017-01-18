@@ -47,4 +47,30 @@ computer : **계산**능력을 가진 모든 장치, 데이터와 명령어를 �
 - 컴퓨터의 지능화, 자동화, 병렬처리에 초점이 맞춰져 있음
 - 고도의 시스템 분야에 활용하고 있으며 계속 개발 진행 중
 	
-![fifth_gen_computer](http://blog.mirchimart.com/wp-content/uploads/2012/06/apple-imac-all-in-one-desktop-pc.jpg)
+![fifth_gen_computer](http://blog.mirchimart.com/wp-content/uploads/2012/06/apple-imac-all-in-one-desktop-pc.jpg)   
+
+-
+
+### 컴퓨터의 구성
+- 컴퓨터는 크게 하드웨어(H/W)와 소프트웨어(S/W)로 나누어진다.
+
+#### 하드웨어   
+
+##### 입력장치
+- 사람이 컴퓨터에게 입력하는 정보를 받아들이는 장치
+- 키보드, 마우스, 스캐너 등
+ 
+![input_device](http://passnownow.com/wp-content/uploads/2015/10/Input-Devices.jpg)   
+
+##### 출력장치
+- 컴퓨터의 정보 및 처리 결과를 외부 장치로 내보내는 장치
+- 스피커, 모니터, 프린터 등
+ 
+![output_device](http://studentcms.ise.canberra.edu.au/itw/kellkings/wp-content/uploads/sites/52/2014/04/Output-Devices.jpg)
+
+##### 처리장치(제어, 연산)
+- 컴퓨터가 계산 및 처리를 위해 사용하는 장치
+- CPU(Central Processing Unit)
+	
+![CPU](https://www.bhphotovideo.com/images/images1000x1000/intel_bx80646i54690k_core_i5_4690k_processor_1060511.jpg)
+

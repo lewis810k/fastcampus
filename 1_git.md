@@ -46,7 +46,7 @@
 
 -
 
-### 주요 명령어
+### 주요 명령어  
 
 - `Add` – 작업 내용 중 일부 혹은 전체를 *stage area*로 저장하는 작업
 - `commit` – *stage area*의 작업 내용을 *local repository*에 저장하는 작업   

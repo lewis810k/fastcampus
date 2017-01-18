@@ -48,3 +48,6 @@
 
 진수변환기   
 http://www.tomylove.net/it-computer/numer-base-converter-digit-conversion-online
+
+
+

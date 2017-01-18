@@ -17,3 +17,34 @@ computer : **계산**능력을 가진 모든 장치, 데이터와 명령어를 �
 - ABC, ENIAC, EDSAC, EDVAC, UNIVAC   
 
 ![first_gen_computer](https://sites.google.com/site/fun21stcomputer/_/rsrc/1355060064429/howcomhome/history/785px-Eniac.jpg?height=305&width=400)
+
+#### 제 2세대 컴퓨터(1959 ~ 1965) : 냉전시대 초기
+- 소자 : 트랜지스터
+- 용도 : 사무, 과학기술
+- FORTRAN, COBOL 컴파일 언어 사용
+- 진공관의 1/200 크기, 저전력, 저가, 낮은 고장률
+- 저발열에 따른 냉각기 필요성 감소
+
+![second_gen_computer](http://theevolutionofcomputersovertime.weebly.com/uploads/4/2/2/0/42204035/2146864_orig.png)
+
+#### 제 3세대 컴퓨터(1965 ~ 1970) : 컴퓨터 소형화
+- 소자 : 집적회로(IC)
+- 다리 하나가 전선 하나를 대체함, 소형, 저가, 고속
+- 관리, 처리, 사용자 프로그램의 S/W 체계 확립
+- 시분할 처리 시스템, 다중처리기법 개발
+
+![third_gen_computer](http://3.bp.blogspot.com/-mBJa4CDd3L0/VLiGUNP6wzI/AAAAAAAAADM/ZW7XLu3v5xk/s1600/tg.jpg)  
+
+#### 제 4세대 컴퓨터(1971 ~ 1983)
+- 소자 : 고밀도 집적회로
+- 마이크로 프로세서 탑재 : Intel CPU
+- 컴퓨터 소형화 및 가정용 PC 보급
+
+![fourth_gen_computer](http://4.bp.blogspot.com/-QK9Id-OKRl8/Togf_0RYd_I/AAAAAAAAAAw/HCX-OJ0eG4g/s1600/4th+gene.jpg)
+
+#### 제 5세대 컴퓨터(1984 ~ )
+- 소자 : 초고밀도 집적회로
+- 컴퓨터의 지능화, 자동화, 병렬처리에 초점이 맞춰져 있음
+- 고도의 시스템 분야에 활용하고 있으며 계속 개발 진행 중
+	
+![fifth_gen_computer](http://blog.mirchimart.com/wp-content/uploads/2012/06/apple-imac-all-in-one-desktop-pc.jpg)

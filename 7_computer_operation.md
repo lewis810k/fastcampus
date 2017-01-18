@@ -1,1 +1,83 @@
-test
+# 컴퓨터 연산
+
+![img_1](https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS6wOETudFIK64wdubZiwSKH2Bz2MOYusIgN-mDFJhQE7taJas3Ig)
+
+컴퓨터는 우리가 하기 힘든 연산을 순식간에 해준다.  
+하지만, 실제로 컴퓨터는 이 모든 작업을 **덧셈**으로만 해결한다.   
+덧셈밖에 할 줄 모르기 때문이다.   
+
+컴퓨터의 덧셈은 어떤 원리를 가지는 지 살펴보자.
+
+-
+
+### 반가산기
+
+![half_adder](http://quiz.geeksforgeeks.org/wp-content/uploads/2015/07/halfadder1.gif)
+
+반가산기의 논리회로에서 SUM가 만들어지는 과정부터 보면,  
+이진수로 입력되는 A, B값들이 XOR을 거쳐 SUM가 된다.  
+`A XOR B`은 `((not A) and B) + (A + (not B))`로 풀어볼 수 있다.  
+
+>**0 XOR 0일 때,  
+((not 0) and 0) + (0 and (not 0))  
+(1 and 0) + (0 and 1) == 0**    
+
+-
+
+>**0 XOR 1일 때,  
+((not 0) and 1) + (0 and (not 1))  
+(1 and 1) + (0 and 0) == 1**  
+
+-
+
+>**1 XOR 0일 때,  
+((not 1) and 0) + (1 and (not 0))  
+(0 and 0) + (1 + 1) == 1**  
+
+-
+
+>**1 XOR 1일 때,  
+((not 1) and 1) + (1 and (not 1))  
+(0 and 1) + (1 and 0) == 0  (자리 올림이 발생한 경우)**  
+
+`CARRY`는 단순하게 A and B의 값을 통해 결정된다.  
+`AND`연산은 A와 B모두 1일 때만 1의 값을 가진다.   
+즉, `SUM`에서 자리올림이 발생하는 경우 `CARRY`값이 1이 된다.  
+
+-
+
+### 전가산기
+![full_adder](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcO2jqpuYGykNZkcv_-X89Zy1rJPuQq1h3RxPiabMz1MOqIyM5)  
+
+위의 그림에서 Ci는 Carry In을 뜻한다.  
+반가산기에서는 A와 B 두 입력만 있었다면  
+전가산기에서는 이전 연산에서의 자리올림까지 입력으로 받는다.  
+
+그리고 여기서 새롭게 발생하는 Carry는 Co(Carry Out)으로 나간다.  
+
+#### 전가산기 간편버전
+![full_adder_simple](http://www.circuitstoday.com/wp-content/uploads/2010/04/Single-bit-Full-Adder.gif)  
+
+내부 회로도를 제외하고 input과 output만 살펴보면 위의 그림과 같다.  
+이렇게 구현된 전가산기는 1비트에 해당된다.  
+
+간단하게 4비트 환경이라고 가정했을 때의 구동방식은 다음과 같다.  
+![4bit_full_adder](https://qph.ec.quoracdn.net/main-qimg-8c8f21886d4b925a66343e5b2ae77a71-c?convert_to_webp=true)  
+
+1001 + 0011의 연산해보자.  
+1001은 A3 A2 A1 A0의 값에 각각 해당되고,  
+0011은 B3 B2 B1 B0의 값에 맵핑된다.  
+
+A0 + B0 == 1 + 1에서 S0은 0이 되고 Carry가 발생하기 때문에 C1은 1이 된다.  
+여기서 발생한 C1은 A1 + B1의 연산에 반영된다.   
+32비트 환경에서는 전가산기 32개가 동시에 작동된다.  
+
+-
+
+### 논리 회로도와 진리표
+![logic_gate](http://i.imgur.com/M59IOZQ.jpg)  
+
+각 회로도는 input(A, B)에 대한 output(X)을 내보낸다.   
+
+-
+

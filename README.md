@@ -14,11 +14,12 @@
 - 5_computer_architecture : 컴퓨터 역사, 구성, 구조
 - 6_data_expression : 2진수, 10진수, 16진수 표현, 변환
 - 7_computer_operation : 반가산기, 전가산지, 컴퓨터의 뺄셈, OVERFLOW, 논리연산자  
+- 8_logical_operation : 논리연산자 문제 풀이  
 
 -
 
 ### 1/19  
-- 8_OS_DB : 운영체제, 데이터베이스  
+- 9_OS_DB : 운영체제, 데이터베이스  
 
 -
 

@@ -23,3 +23,9 @@
 
 -
 
+### 1/20  
+- 10_data_structure : 자료구조  
+- 11_algorithm : 알고리즘  
+
+---
+

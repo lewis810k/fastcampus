@@ -27,5 +27,9 @@
 - 10_data_structure : 자료구조  
 - 11_algorithm : 알고리즘  
 
----
+-
 
+### 1/23
+- 12_network_security : 네트워크, 암호화   
+
+---

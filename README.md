@@ -32,4 +32,10 @@
 ### 1/23
 - 12_network_security : 네트워크, 암호화   
 
+-
+
+### 1/24
+- 13_software_engineering : 소프트웨어 공학  
+- 14_programming_language : 프로그래밍 언어론
+
 ---

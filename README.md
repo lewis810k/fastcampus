@@ -97,8 +97,8 @@
 ### 2/12
 - 32_쿼리만들기
 - 33_쿼리셋_메소드(1) : 쿼리셋을 반환하는 메소드
-- 34_쿼리셋_메소드(1) : 쿼리셋을 반환하지 않는 메소드
-- 35_쿼리셋_메소드(1) : field lookups, aggregation functinos, query-related tools
+- 34_쿼리셋_메소드(2) : 쿼리셋을 반환하지 않는 메소드
+- 35_쿼리셋_메소드(3) : field lookups, aggregation functinos, query-related tools
 
 -
 

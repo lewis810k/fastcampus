@@ -54,4 +54,27 @@ content_file_path = os.path.join(conf_path, 'settings_local.json')	#5
 ```python
 content = open(os.path.join(conf_path, 'settings_local.json')).read()
 ```
-이렇게 받아온 content는 json type이 아니라 str type이다. 
+이렇게 받아온 content는 dict type이 아니라 str type이다. str type을 다시 dict으로 바꾸기 위해 json함수를 사용한다. 
+
+```python
+content_json = json.loads(content)
+```
+json은 따로 import 시켜준다. 이렇게 형변환하면 json에서 다루는 dict타입으로 변경된다. 
+
+#### #3. requests.get 요청 받아오기
+
+requests는 터미널에서 pip install requests 명령어로 설치해준다. 
+
+```python
+params = {
+    'part': 'snippet',
+    'q': '라디오스타',
+    'key': content_json["youtube"]["API_KEY"],
+
+}
+
+request_result = requests.get('https://www.googleapis.com/youtube/v3/search?', params=params)
+```
+아래의 request.get 함수에서 키워드 인자로 params을 취하는 것을 볼 수 있다. 이 값들을 미리 만들어서 requests.get요청을 시도한다. 
+
+

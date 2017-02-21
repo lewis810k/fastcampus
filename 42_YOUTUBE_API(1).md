@@ -77,4 +77,64 @@ request_result = requests.get('https://www.googleapis.com/youtube/v3/search?', p
 ```
 아래의 request.get 함수에서 키워드 인자로 params을 취하는 것을 볼 수 있다. 이 값들을 미리 만들어서 requests.get요청을 시도한다. 
 
+params가 취할 수 있는 키값은 다양하다. [더 알아보기](https://developers.google.com/youtube/v3/docs/search/list)
+
+다큐먼트에 따르면 `'part': 'snippet'`은 다음과 같이 설명되어있다. 
+>snippet 속성은 결과의 제목, 설명 등을 식별하는 다른 속성을 포함합니다. part=snippet을 설정하는 경우 API 응답은 중첩된 속성도 모두 포함합니다.
+
+q는 검색어를 말한다. 그리고 key는 API를 사용하기 위한 일종의 검증을 해준다. `#2`에서 content_json은 파일내의 모든 내용은 딕셔너리 형태로 가지고 있기 때문에 `content_json["youtube"]["API_KEY"]`로 키값에 접근할 수 있다. 중첩된 딕셔너리 구조가 잘 이해가 되지 않는다면 딕셔너리만 따로 공부해보는 것이 좋을 것 같다. 
+
+>API를 다룰 때는 특히 딕셔너리와 리스트를 많이 사용하기 때문에 이 둘의 특성을 잘 이해하는 것이 시간을 많이 절약해줄지도 모른다. 
+
+검색결과수를 따로 지정하지 않으면 디폴트값으로 5개를 반환한다. 
+
+request_result.url을 출력해보면 다음과 같다.  
+```
+https://www.googleapis.com/youtube/v3/search?q=%EB%9D%BC%EB%94%94%EC%98%A4%EC%8A%A4%ED%83%80&key=AIzaSyDh8WWytKv8YYpvZYFRSL3nGbPaI_aEY_4&part=snippet
+```
+길지만 자세히 보면 아주 간단하다. 우리가 params로 넘겨준 값이 물음표 기호 뒤에서 `key=value&key=value&key=value`형식으로 입력되었다. 
+
+#### #4. 전송받은 결과값을 다시 json형식으로 변환
+파이썬에서 사용하기 위해 다시 json형식으로 바꾸는 과정을 매우 간단하다. .json()만 붙여주면 해당 데이터를 json화 시켜준다. 
+
+```python
+request_result_json = request_result.json()
+```
+
+> 이 객체를 그대로 print 해보면 정렬되지 않은 딕셔너리 형태로 출력된다. 매우 보기가 불편하다. pprint를 import하고 pprint(request_result_json)으로 출력하면 들여쓰기가 모두 적용된 상태로 출력된다.
+
+pprint(request_result_json)의 일부이다. 
+![image_json](https://s3.postimg.org/mryek8ihf/0222_2.png)
+
+
+#### #5. 검색결과를 반복문을 이용하여 적절히 출력하기
+
+위의 사진에서 본 것처럼 꽤 많은 데이터를 넘겨받았다. 데이터가 많아지면 복잡해보이기 때문에 우선 title에 대해서만 먼저 해본다.
+
+```python
+items = request_result_json['items']
+
+for item in items:
+	print('title: ', item['snippet']['title'])
+```
+다른 부분은 다 딕셔너리로 처리되어있지만 'items'키는 value로 리스트형식을 취한다. request_result_json이 최상위 루트를 가리키고 있으므로 'items'만 따로 접근한다. items변수 안에는 다음과 같은 형식으로 데이터가 저장되어 있다. 
+```python
+items = [dict1, dict2, dict3, ditc4, ...]
+```
+
+그 다음 우리가 원하는 title은 items['snippet']안에 들어있다. items의 각 dict를 돌면서 모든 title을 추출할 수 있다. 
+
+```
+#출력결과
+
+title:  신정환 레전드 라디오스타
+title:  [라디오스타]서현철님 아내 이야기!!  김국진 윤종신 웃느라 진행 못함 [황존 TV]#서현철 #연극배우
+title:  황금어장 라디오스타 514회 – 독을 품은 남자들 특집 - Gyu-hyun surrounding Kim Gura and shindong a war of nerves!
+title:  라디오스타 2009
+title:  라디오스타 2008
+```
+
+검색결과 계속 받아오기 추가 예정
+
+
 

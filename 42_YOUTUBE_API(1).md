@@ -24,6 +24,8 @@ django_app과 동일한 레벨에서 code라는 폴더를 생성한다.
 
 폴더 내부에 youtube.py를 생성한다. 
 
+-
+
 #### #1. 키 불러오기
 YOUTUBE에 접근하기 위해서 API키 값이 필요하기 때문에 settings_local.json에 입력해두었던 키값을 불러온다. youtube.py와 settings_local.json은 서로 다른 디렉토리에 존재하기 때문에 settings_local.json의 실제 경로가 필요하다. 
 
@@ -48,6 +50,8 @@ conf_path = os.path.join(youtube_path, '.conf')	#4
 content_file_path = os.path.join(conf_path, 'settings_local.json')	#5
 ```
 
+-
+
 #### #2. json파일 읽기
 
 파일을 읽을 때 open으로 열지만 해당 라인에서 .read()를 호출할 경우 메모리에 바로 올려지지 않기 때문에 close()를 따로 해주지 않아도 된다. 
@@ -60,6 +64,8 @@ content = open(os.path.join(conf_path, 'settings_local.json')).read()
 content_json = json.loads(content)
 ```
 json은 따로 import 시켜준다. 이렇게 형변환하면 json에서 다루는 dict타입으로 변경된다. 
+
+-
 
 #### #3. requests.get 요청 받아오기
 
@@ -94,6 +100,8 @@ https://www.googleapis.com/youtube/v3/search?q=%EB%9D%BC%EB%94%94%EC%98%A4%EC%8A
 ```
 길지만 자세히 보면 아주 간단하다. 우리가 params로 넘겨준 값이 물음표 기호 뒤에서 `key=value&key=value&key=value`형식으로 입력되었다. 
 
+-
+
 #### #4. 전송받은 결과값을 다시 json형식으로 변환
 파이썬에서 사용하기 위해 다시 json형식으로 바꾸는 과정을 매우 간단하다. .json()만 붙여주면 해당 데이터를 json화 시켜준다. 
 
@@ -106,6 +114,7 @@ request_result_json = request_result.json()
 pprint(request_result_json)의 일부이다. 
 ![image_json](https://s3.postimg.org/mryek8ihf/0222_2.png)
 
+-
 
 #### #5. 검색결과를 반복문을 이용하여 적절히 출력하기
 
@@ -134,7 +143,26 @@ title:  라디오스타 2009
 title:  라디오스타 2008
 ```
 
-검색결과 계속 받아오기 추가 예정
+-
 
+#### #추가. 검색결과 계속 받아오기
+매번 API정보를 불러올 때 마다 다음 페이지가 존재하면 API반환시에 nextPageToken값을 같이 받는다. 이 정보를 이용하여 다음 요청을 진행하면 검색결과를 추가적으로 받아올 수 있다. 
+
+![nextpage](https://s22.postimg.org/ti26j2wtd/0222_3.png)
+
+```python
+while request_result_json['nextPageToken'] != None:
+    for item in request_result_json['items']:
+        print('title: ', item['snippet']['title'])
+    params = {
+        'part': 'snippet',
+        'q': '라디오스타',
+        'key': content_json["youtube"]["API_KEY"],
+        'pageToken': request_result_json['nextPageToken']
+    }
+    request_result = requests.get('https://www.googleapis.com/youtube/v3/search?', params=params)
+    request_result_json = request_result.json()
+```
+nextPageToken이 None이라는 것은 현재검색결과가 마지막 페이지라는 것이다. 마지막페이지가 아니라면 계속해서 다음 페이지에 대한 요청을 진행하도록 하는 코드이다. 
 
 

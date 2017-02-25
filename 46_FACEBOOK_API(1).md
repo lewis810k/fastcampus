@@ -34,7 +34,7 @@ AUTH_USER_MODEL = 'member.MyUser'
     "secret_key": "****"
   },
   "facebook": {
-    "app_id": "****",쌍
+    "app_id": "****",
     "secret_code": "****"
   }
 }

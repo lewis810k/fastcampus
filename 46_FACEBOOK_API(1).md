@@ -31,15 +31,15 @@ AUTH_USER_MODEL = 'member.MyUser'
 ```python
 {
   "django": {
-    "secret_key": "w%g7rvi_lmq0mm9xvvor2u#1=******************"
+    "secret_key": "****"
   },
   "facebook": {
-    "app_id": "224573**********",
-    "secret_code": "9b5b14643bf0*******************"
+    "app_id": "****",쌍
+    "secret_code": "****"
   }
 }
 ```
->json형식은 데이터를 딕셔너리형태로 관리하며 **"큰따옴표만"** 허용한다. 
+>json형식은 데이터를 딕셔너리형태로 관리하며 **"쌍따옴표만"** 허용한다. 
 
 -
 

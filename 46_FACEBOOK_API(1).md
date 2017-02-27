@@ -1,7 +1,7 @@
 # FACEBOOK API(1)
 
 1. 초기세팅  
-2. FACEBOOK로그인 API  
+2. FACEBOOK로그인  
 
 ### 초기세팅
 우선 작업을 위한 가상환경을 세팅하고 facebook project와 member app을 구성한다.  
@@ -72,5 +72,3 @@ TEMPLATES, static, media 등에 대한 경로를 설정해준다. 그리고 conf
 SECRET_KEY = config['django']['secret_key']
 ```
 
-
-### FACEBOOK로그인 API

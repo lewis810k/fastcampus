@@ -191,11 +191,22 @@ app_id와 user_id 필드를 통해 앱에서 사용자와 앱에 유효한 액�
 
 #### #4. 유저정보 받아오기
 그래프 API를 이용하여 USER 개인의 정보를 받아올 수 있다. 
+```
+GET /v2.8/{user-id} HTTP/1.1
+Host: graph.facebook.com
+```
+`graph.facebook.com/{user-id}`형식으로 요청을 한다. 이 요청을 할 때 기본적으로 모든 정보가 반환되지는 않는다. fields 검색 매개변수를 사용하여 반환될 필드를 선택할 수 있다. 
 
+예를 들어, 다음 문장은 특정 유저의 id, name, picture 필드만 추출한다. 
+```
+https://graph.facebook.com/user_id?fields=id,name,picture
+```
+views.py에서도 원하는 필드들을 따로 지정하여 요청할 때 사용한다. 그리고 이전과 마찬가지로 요청에 대한 응답을 json형식으로 변환한다. 
 
+[그래프 API 사용](https://developers.facebook.com/docs/graph-api/using-graph-api/)
 
-
-
+#### #5. 인증 및 로그인
+응답받은 정보들을 이용하여 authenticate 메소드를 실행하고 이에 대한 반환값으로 유저 객체를 받는다. 정상적으로 인증이 완료될 경우 해당 유저객체를 이용하여 로그인을 진행하고 메인페이지로 redirect한다. 
 
 ```
 

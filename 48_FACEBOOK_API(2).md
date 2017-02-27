@@ -208,6 +208,8 @@ views.py에서도 원하는 필드들을 따로 지정하여 요청할 때 사�
 #### #5. 인증 및 로그인
 응답받은 정보들을 이용하여 authenticate 메소드를 실행하고 이에 대한 반환값으로 유저 객체를 받는다. 정상적으로 인증이 완료될 경우 해당 유저객체를 이용하여 로그인을 진행하고 메인페이지로 redirect한다. 
 
+-
+
 
 ### AUTHENTICATE
 
@@ -290,37 +292,60 @@ authenticate 메소드는 extra_fields라는 이름의 매개변수를 취한다
 
 만약 새로 생성되었다면 이미지를 추출하여 유저객체에 저장한다. 그리고 유저객체를 인증요청했던 곳으로 반환한다. 
 
+-
 
+### 프로필 이미지 추출
 
+```python
+url_profile = 'https://graph.facebook.com/{user_id}/picture'.format(
+                user_id=facebook_id,
+            )
+            params = {
+                'type': 'large',
+                'width': '500',
+                'height': '500',
+            }
 
+            r = requests.get(url_profile, params, stream=True)
+			print(r.url)	#1
+			_, file_ext = os.path.splitext(r.url)
+			print(file_ext)	#2
+            file_ext = re.sub(r'(\.[^?]+).*', r'\1', file_ext)
+			print(file_ext)	#3
+            file_name = '{}{}'.format(
+                facebook_id,
+                file_ext,
+            )
+            print(file_name)	#4
 
-
-
-
-
-
-
-
+            temp_file = NamedTemporaryFile(delete=False)
+            for chunk in r.iter_content(1024):
+                temp_file.write(chunk)
 ```
 
+[User Picture](https://developers.facebook.com/docs/graph-api/reference/user/picture/)에서 관련 정보를 확인할 수 있다. params으로 height, width, redirect, type을 줄 수 있으며 이 중에서 type은 `enum{small, normal, album, large, square}` 다양한 옵션 중에서 선택할 수 있다.
 
+requests를 요청할 때 `stream=True`옵션을 주면 iter_content로 미디어 파일을 다운로드할 수 있다. 우선 파일을 다운로드 하기 전에 url로부터 파일명을 추출해낸다.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+하나씩 출력해보자. 
+`#1`에서 r.url을 출력해보면 정리되지 않은 듯한 느낌을 주는 문자열이 출력된다.
 ```
+https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/10956522_10153288710608838_8140479903644926392_n.jpg?oh=ab250b013e535a8e4a4bbdd35fcc7718&oe=5930C2FD
+```
+os.path.splitext(r.url)은 파일명과 확장자로 split을 한다. 여기서 확장자는 `.jpg`이다. 확장자를 기준으로 나누고 file_ext는 뒷부분에 해당되기 때문에 `#2`에서 출력해보면 다음과 같은 문자열을 가진다.
+```
+.jpg?oh=ab250b013e535a8e4a4bbdd35fcc7718&oe=5930C2FD
+```
+`#3`을 출력하기 전에 정규표현식을 이용하여 문자열을 replace한다. 이 때 확장자만 빼고 나머지는 제거된다. 따라서 출력해보면 다음과 같이 확장자만 출력된다. 
+```
+.jpg
+```
+각 유저의 ID정보는 고유하기 때문에 프로필 사진 이름을 `유저ID.jpg`로 저장해도 문제가 되지 않는다. 이 작업이 `#4`직전에 이루어진다. 따라서, `#4`를 출력해보면 의도한 값이 출력된다. 
+```
+10155034820888838.jpg
+```
+파일이름은 이런 방식으로 결정되지만 실제 데이터는 어떻게 얻어질까. 
 
+temp_file은 임시파일형태를 취한다. 아무값도 가지지 않은 임시파일에 이미지의 내용을 직접 읽어서 저장한다. 위에서 stream=True옵션을 주었기 때문에 요청에 대한 응답인 r에 대해 iter_content함수를 사용할 수 있다. 응답에서 같이 실려온 데이터를 iter_content가 순회한다. 1024바이트씩 끊어서 전체를 읽을 때까지 temp_file에 계속 쓴다. 다운로드가 되는 상황이다. 
 
-
-
+다운로드가 완료되면 user.img_profile에 저장된다. 

@@ -208,6 +208,99 @@ views.py에서도 원하는 필드들을 따로 지정하여 요청할 때 사�
 #### #5. 인증 및 로그인
 응답받은 정보들을 이용하여 authenticate 메소드를 실행하고 이에 대한 반환값으로 유저 객체를 받는다. 정상적으로 인증이 완료될 경우 해당 유저객체를 이용하여 로그인을 진행하고 메인페이지로 redirect한다. 
 
+
+### AUTHENTICATE
+
+authenticate 메소드를 사용하면 백엔드에 기본적으로 내장되어 있는 인증 메소드를 호출한다. 여기에 추가적으로 커스텀메소드를 적용하려면 settings.py에 다음과 같이 입력한다.
+
+>settings.py
+
+```python
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'member.backends.FacebookBackend',
+]
+```
+입력된 순서대로 모든 authenticate를 진행한다. 하나라도 인증되지 않으면 거부된다.  
+
+
+>member/backends.py
+
+```python
+class FacebookBackend():
+    def authenticate(self, facebook_id, extra_fields=None):
+
+		# --------  유저 객체 관련  ----------
+        defaults = {
+            'first_name': extra_fields.get('first_name', ''),
+            'last_name': extra_fields.get('last_name', ''),
+            'email': extra_fields.get('email', ''),
+            'gender': extra_fields.get('gender', ''),
+        }
+        
+        user, user_created = MyUser.objects.get_or_create(
+            username=facebook_id,
+            defaults=defaults,
+        )
+        
+        if user_created == 1:
+            # --------  프로필 이미지 추출  -----------
+            url_profile = 'https://graph.facebook.com/{user_id}/picture'.format(
+                user_id=facebook_id,
+            )
+            params = {
+                'type': 'large',
+                'width': '500',
+                'height': '500',
+            }
+
+            temp_file = NamedTemporaryFile(delete=False)
+            r = requests.get(url_profile, params, stream=True)
+            _, file_ext = os.path.splitext(r.url)
+
+            file_ext = re.sub(r'(\.[^?]+).*', r'\1', file_ext)
+
+            file_name = '{}{}'.format(
+                facebook_id,
+                file_ext,
+            )
+
+            for chunk in r.iter_content(1024):
+                temp_file.write(chunk)
+
+            # --------  프로필 이미지 추출 끝 -----------
+            user.img_profile.save(file_name, File(temp_file))
+        return user
+
+    def get_user(self, user_id):
+        try:
+            return MyUser.objects.get(id=user_id)
+        except MyUser.DoesNotExist:
+            return None
+```
+인증 작업은 최종적으로 유저객체를 반환한다. 크게 보면 프로필 이미지를 다운받는 것과 유저 객체를 생성하는 작업으로 구분된다. 프로필 이미지 추출은 밑에서 자세히 다루도록 하겠다. 
+
+authenticate 메소드는 extra_fields라는 이름의 매개변수를 취한다. 이 값들은 defaults에 할당된다. 한 줄만 살펴보자. 
+```
+'first_name': extra_fields.get('first_name', ''),
+``` 
+이 코드는 extra_fields에 first_name이라는 키가 존재한다면 그에 대한 값을 'first_name'에 할당하라는 명령이다.  
+
+그 다음 defaults를 부가적인 정보로, 그리고 username으로 facebook_id를 가지는 유저객체를 생성한다. 만약 이미 존재한다면 get을 한다. facebook_id는 view level에서 USER_ID로 사용했던 값이다. 
+
+만약 새로 생성되었다면 이미지를 추출하여 유저객체에 저장한다. 그리고 유저객체를 인증요청했던 곳으로 반환한다. 
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 

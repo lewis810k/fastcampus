@@ -1,5 +1,7 @@
 # FACEBOOK 로그인
 
+전체 흐름은 [FACEBOOK 로그인](https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow)을 참조한다. 
+
 ## 사용자 로그인 유도
 
 ### 로그인 대화 상자 호출 및 리디렉션 URL 설정
@@ -137,7 +139,9 @@ GET https://graph.facebook.com/v2.8/oauth/access_token?
 ```
 - client_id : 앱 ID
 - redirect_uri : 필수 인수이며 로그인 프로세스를 시작할 때 사용한 request_uri와 같아야 한다. /member/login/facebook으로 현재 뷰로 request 했기 때문에 이 값과 같이 사용한다. 
-- client_secret : 앱 대시보드에 있는 고유 앱 시크릿 코드
+- client_secret : 앱 대시보드에 있는 고유 앱 시크이 엔드포인트는 다음과 같은 매개변수를 사용합니다.
+
+릿 코드
 - code : 로그인 대화상자가 리디렉션할 때 수신한 매개변수
 
 필수 매개변수들을 채워서 request를 하면 다음과 같이 JSON형식으로 반환된다. 
@@ -151,8 +155,42 @@ GET https://graph.facebook.com/v2.8/oauth/access_token?
 JSON형식을 갖췄다는 것이지 실제로는 str타입으로 넘겨받는다. 따라서 .json()함수로 형변환을 해준다. 우리가 필요한 ['access_token']을 추출한다. 
 
 
+#### #3. 액세스 토큰 검사
+API 엔드포인트를 이용하여 토큰의 검사를 자동화한다. 엔드포인트는 다음과 같다. 
 
+```html
+GET graph.facebook.com/debug_token?
+     input_token={token-to-inspect}
+     &access_token={app-token-or-admin-token}
+```
+- input_token : 검사가 필요한 토큰
+- access_token : 앱 개발자의 액세스 토큰 또는 앱 액세스 토큰
 
+정상적으로 검사가 되었다면 다음과 같은 형식의 데이터를 반환한다. 
+
+```python
+{
+    "data": {
+        "app_id": 138483919580948, 
+        "application": "Social Cafe", 
+        "expires_at": 1352419328, 
+        "is_valid": true, 
+        "issued_at": 1347235328, 
+        "metadata": {
+            "sso": "iphone-safari"
+        }, 
+        "scopes": [
+            "email", 
+            "publish_actions"
+        ], 
+        "user_id": 1207059
+    }
+}
+```
+app_id와 user_id 필드를 통해 앱에서 사용자와 앱에 유효한 액세스 토큰을 확인할 수 있다. 우리가 필요한 것은 user_id이므로 따로 변수화한다.
+
+#### #4. 유저정보 받아오기
+그래프 API를 이용하여 USER 개인의 정보를 받아올 수 있다. 
 
 
 

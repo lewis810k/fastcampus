@@ -129,16 +129,24 @@
 -
 
 ### 2/21
-- 42_YOUTUBE_API(1)
+- 42_YOUTUBE_API(1) : 검색결과 받아오기
 
 -
 
 ### 2/22
-- 43_YOUTUBE_API(2)
+- 43_YOUTUBE_API(2) : 검색화면 POST에서 GET으로.
 
 -
 
 ### 2/23
 - 44_모델링_에러대처 : M2M필드에서 중간자모델 추가시 발생하는 DB에러 대처
+- 45_YOUTUBE_API(3) : 북마크 등록/해제
+- 46_FACEBOOK_API(1) : 초기세팅
+
+-
+
+### 2/24
+- 47_COOLSMS_API
+- 48_FACEBOOK_API(2) : 로그인
 
 ---

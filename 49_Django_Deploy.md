@@ -1,8 +1,10 @@
 # Ubuntu Linux Deploy
 
+기본 내용은 [Ubuntu Linux Deploy](https://github.com/LeeHanYeong/Fastcampus-WPS-4th/blob/master/Deploy/01.%20EC2.md)를 참고하고 부가설명를 추가한다. 
+
 > AWS EC2 + Ubuntu16.04 + Nginx + uWSGI + Django
 
-### EC2 Instance생성
+### AWS EC2 Instance생성
 
 [AWS 계정 생성하기](http://pyrasis.com/book/TheArtOfAmazonWebServices/Chapter03)
 
@@ -36,18 +38,100 @@ Ubuntu Server를 선택한다.
 
 새로운 인스턴스가 생성되었고, running 상태에 있다. 
 
+#### Key Pair
+
+인스턴스 생성시 만들었던 .pem 파일을 다음 경로에 저장한다. 
+```
+/home/lewis/.ssh/lewis.pem
+```
+경로의 lewis는 각자 PC 이름에 해당하고 lewis.pem의 lewis는 pem의 이름이다. 
+
+pem파일에 접근할 때 다음과 같은 에러가 날 수 있다. 
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0644 for '/Users/Arcanelux/.ssh/fastcampus.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "/home/lewis/.ssh/lewis.pem": bad permissions
+Permission denied (publickey).
+```
+현재 소유주만 읽을 수 있도록 권한을 수정한다. 
+```
+chmod 400 lewis.pem
 ```
 
+-
 
+### Ubuntu 기본 설정
 
+pem 파일과 서버주소를 통해 서버에 접속한다.
 
+![0306-08](https://s21.postimg.org/u2nvky3hz/0306_8.png)
 
-
-
-
-
-
-
-
-
+#### 접속 명령어
 ```
+ssh -i ~/.ssh/lewis.pem ubuntu@(EC2 인스턴스의 Public DNS)
+```
+yes를 입력하고 서버에 접속한다. 
+
+#### 언어팩 설치
+```
+sudo apt-get install language-pack-ko
+sudo locale-gen ko_KR.UTF-8
+```
+
+#### python-pip설치
+```
+sudo apt-get update
+
+sudo apt-get install python-pip
+```
+update를 먼저 실행하지 않으면 python-pip가 제대로 설치되지 않을 것이다. 
+
+
+#### zsh 설치
+```
+sudo apt-get install zsh
+```
+
+#### oh-my-zsh 설치
+```
+sudo curl -L http://install.ohmyz.sh | sh
+```
+
+#### Default shell 변경
+```
+sudo chsh ubuntu -s /usr/bin/zsh
+```
+
+#### pyenv requirements설치
+```
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
+```
+
+#### pyenv 설치
+```
+curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+```
+pyenv 설치시 경로를 추가하라는 경고메시지가 출력된다. 
+
+#### pyenv 설정 .zshrc에 기록
+```
+vi ~/.zshrc
+
+export PATH="/home/ubuntu/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+![0306-9](https://s22.postimg.org/4gao9i5ch/0306_9.png)
+
+#### Pillow 라이브러리 설치
+```
+sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+```
+
+이쯤에서 터미널을 통한 서버 접속을 끊고 재접속을 해서 모든 변경사항이 적용되도록 한다. 
+
+-

@@ -135,3 +135,67 @@ sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblc
 이쯤에서 터미널을 통한 서버 접속을 끊고 재접속을 해서 모든 변경사항이 적용되도록 한다. 
 
 -
+
+### Django 관련 설정
+
+서버의 srv/ 경로에 app이라는 디렉토리를 생성하려고 하는데 권한때문에 에러가 발생하기 때문에 디렉토리 권한을 재설정한다. 
+```
+sudo chown -R ubuntu:ubuntu /srv/
+```
+![0306-11](https://s21.postimg.org/daiue4q1j/0306_12.png)
+srv의 사용자가 root에서 ubuntu로 바뀐 것을 확인할 수 있다. 
+
+새로운 유저를 등록할 때는 다음과 같은 명령어를 사용한다. 
+```
+sudo adduser ubuntu
+```
+app 디렉토리가 생성되었으니 로컬에 있던 프로젝트를 서버로 올려보자. 
+
+![0306-13](https://s21.postimg.org/x6cpqz387/0306_13.png)
+```
+-r 					: 폴더 작업 관련 명령일 때 사용
+-i ~/.ssh/lewis.pem : 키 전송
+. 					: 현재경로
+내용: 현재 디렉토리의 내용을 서버의 /srv/app 폴더로 복사한다. 
+```
+서버의 /srv/app/경로에 프로젝트가 잘 복사됐는지 확인한다. 
+
+
+#### pyenv 3.5.2설치 및 virtualenv생성
+```
+pyenv install 3.5.2
+pyenv virtualenv deploy_ec2
+pyenv local deploy_ec2
+```
+
+#### requirements설치
+```
+pip install -r requirements.txt
+```
+
+#### runserver 테스트
+```
+cd django_app
+./manage.py runserver 0.0.0.0:8080
+```
+Django가 제대로 설치되지 않았다는 에러가 발생한다면 pip list를 통해 설치된 목록을 확인한다. django가 확인되는데 에러가 계속 발생한다면 재접속을 하고 다시 pip list를 해보면 설치가 안 되어있는 것을 확인할 수 있다. deploy_ec2 바깥에 Django가 설치되었다면 pip uninstall django 명령어로 삭제한다. 그리고 app 디렉토리 안에서 pip install django 명령어를 입력한다. 
+
+EC2 인스턴스의 `public IP:8080`으로 접속해서 테스트한다. 
+
+#### AWS Security Groups 8080 Port추가
+
+8080 포트에 대한 접근권한이 열려있지 않다면 Security Groups에서 추가해준다. 
+```
+Security Groups -> Inbound -> Edit -> Custom TCP Rule -> 8080
+```
+
+#### ALLOWED_HOSTS 설정
+```
+vi mysite/settings.py
+ALLOWED_HOSTS = [
+    '<ec2 domain name'>,
+    또는
+    '.amazonaws.com',
+]
+```
+> 이거 안 해도 돌아감??

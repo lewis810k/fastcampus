@@ -199,3 +199,88 @@ ALLOWED_HOSTS = [
 ]
 ```
 > 이거 안 해도 돌아감??
+
+-
+
+### uWSGI 관련 설정
+
+#### 웹 서버 관리용 유저 생성
+```
+sudo adduser nginx
+```
+
+#### uWSGI설치
+```
+(virtualenv 환경 내부에서)
+pip install uwsgi
+```
+
+#### uWSGI 정상 동작 확인
+```
+uwsgi --http :8080 --home (virtualenv경로) --chdir (django프로젝트 경로) -w (프로젝트명).wsgi
+```
+
+ex) pyenv virtualenv이름이 deploy_ec2, django프로젝트가 /srv/app/django_app, 프로젝트명이 app일 경우
+```
+uwsgi --http :8080 --home ~/.pyenv/versions/deploy_ec2 --chdir /srv/app/django_app -w deploy_ec2.wsgi
+```
+실행 후 :8080으로 접속하여 요청을 잘 받는지 확인
+
+#### uWSGI 사이트 파일 작성
+[uwsgi]부터 다 입력해야한다.
+```
+sudo mkdir /etc/uwsgi
+sudo mkdir /etc/uwsgi/sites
+sudo vi /etc/uwsgi/sites/app.ini
+
+[uwsgi]
+chdir = /srv/app/django_app
+module = deploy_ec2.wsgi:application
+home = /home/ubuntu/.pyenv/versions/deploy_ec2
+
+uid = www-data
+gid = www-data
+
+socket = /tmp/app.sock
+chmod-socket = 666
+chown-socket = www-data:www-data
+
+enable-threads = true
+master = true
+pidfile = /tmp/app.pid
+```
+
+
+#### uWSGI site파일로 정상 동작 확인
+```
+uwsgi --http :8080 -i /etc/uwsgi/sites/app.ini
+```
+#### sudo로 root권한으로 실행
+```
+sudo /home/ubuntu/.pyenv/versions/deploy_ec2/bin/uwsgi --http :8080 -i /etc/uwsgi/sites/app.ini
+```
+
+#### uWSGI 서비스 설정파일 작성
+```
+sudo vi /etc/systemd/system/uwsgi.service
+
+[Unit]
+Description=uWSGI Emperor service
+After=syslog.target
+
+[Service]
+ExecPre=/bin/sh -c 'mkdir -p /run/uwsgi; chown www-data:www-data /run/uwsgi'
+ExecStart=/home/ubuntu/.pyenv/versions/deploy_ec2/bin/uwsgi --uid www-data --gid www-data --master --emperor /etc/uwsgi/sites
+
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+

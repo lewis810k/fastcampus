@@ -164,7 +164,7 @@ app 디렉토리가 생성되었으니 로컬에 있던 프로젝트를 서버�
 #### pyenv 3.5.2설치 및 virtualenv생성
 ```
 pyenv install 3.5.2
-pyenv virtualenv deploy_ec2
+pyenv virtualenv 3.5.2 deploy_ec2
 pyenv local deploy_ec2
 ```
 

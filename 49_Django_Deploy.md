@@ -68,13 +68,12 @@ chmod 400 lewis.pem
 
 pem 파일과 서버주소를 통해 서버에 접속한다.
 
-![0306-08](https://s21.postimg.org/u2nvky3hz/0306_8.png)
-
 #### 접속 명령어
 ```
 ssh -i ~/.ssh/lewis.pem ubuntu@(EC2 인스턴스의 Public DNS)
 ```
-yes를 입력하고 서버에 접속한다. 
+명령어 입력 후의 메시지에 대해 yes를 입력하면 서버에 접속된다.
+ 
 
 #### 언어팩 설치
 ```
@@ -143,6 +142,7 @@ sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblc
 sudo chown -R ubuntu:ubuntu /srv/
 ```
 ![0306-11](https://s21.postimg.org/daiue4q1j/0306_12.png)
+
 srv의 사용자가 root에서 ubuntu로 바뀐 것을 확인할 수 있다. 
 
 새로운 유저를 등록할 때는 다음과 같은 명령어를 사용한다. 

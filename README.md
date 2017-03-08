@@ -153,7 +153,7 @@
 
 ### 3/6
 - 49_Django_Deploy(1) : AWS EC2, Ubuntu 서버, uWSGI
-- 50_Django_Deploy(2) : 키 관리, Nginx 관련 설정
+- 50_Django_Deploy(2) : 키 관리, Nginx 관련 설정, 도메인 연결, IAM 유저 생성
 
 -
 

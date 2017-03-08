@@ -1,11 +1,4 @@
-# Django Deploy(3)
-
-- pgAdmin 설정하기
-- postgresql 설정
-- runserver 커스텀 명령어 만들기
-- static 폴더 추가하기
-
-## pgAdmin 설정하기
+### pgAdmin 설정하기
 
 home/pgadmin 디렉토리를 생성한다.  
 pgadmin에 대한 pyenv 가상환경을 만든다.   
@@ -114,7 +107,7 @@ MODE='DEBUG' ./manage.py $1
 
 > 자신의 zsh경로는 which zsh로 확인할 수 있다.
 
-권한변경
+#### 권한변경
 ```
 chmod 755 manage
 ```

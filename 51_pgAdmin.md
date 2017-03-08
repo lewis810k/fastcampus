@@ -1,4 +1,4 @@
-# pgAdmin 설정하기
+### pgAdmin 설정하기
 
 home/pgadmin 디렉토리를 생성한다.  
 pgadmin에 대한 pyenv 가상환경을 만든다.   
@@ -22,7 +22,7 @@ python ~/.pyenv/versions/3.5.2/envs/pgadmin_env/lib/python3.5/site-packages/pgad
 ![0308-3](https://s14.postimg.org/yqspkx6gh/0308_3.png)
 <정상작동화면>
 
-#### postgresql 유저생성(로컬)
+## postgresql 설정(로컬)
 ![0308-5](https://s14.postimg.org/88a2c77qp/0308_5.png)
 -s는 superuser, -P는 password를 의미한다. 관리자 권한으로 패스워드를 가진 슈퍼유저를 생성하는 명령어.
 
@@ -65,6 +65,24 @@ settings.py의 상단에서 DEBUG변수를 모드에 따라 다른 값이 부여
 앞으로 로컬에서 작업할 때는 다음과 같이 MODE변수값을 넣어주면서 실행한다.  
 MODE='DEBUG' ./manage.py runserver
 >이 문장을 간단한 명령어로 만들 수 있다. 아래 [runserver 커스텀 명령어 만들기] 참조.
+
+-
+
+## postgresql 설정(서버)
+변경사항을 scp 명령어를 이용하여 서버로 전송한다. (전송하는 부분은 50번 파일 참고)
+
+postgresql을 설치한다.
+```
+sudo apt-get update 
+sudo apt-get install postgresql postgresql-contrib
+```
+
+#### 유저생성
+```
+sudo -u postgres createuser -s -P lewis
+sudo -u postgres createdb deploy_ec2 –owner=lewis
+```
+migrate 하면 postgresql이 반영되고 정상작동 해야한다
 
 -
 

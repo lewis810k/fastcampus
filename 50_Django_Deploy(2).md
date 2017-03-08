@@ -94,7 +94,30 @@ server {
     }
 }
 ```
-`#1`에서 localhost 뒤에 ec2 주소를 추가해주고 `#2`에서 app.sock으로 소켓이름을 변경해준다.
+`#1`: localhost 뒤에 접근을 허용할 EC2 주소를 추가한다.  
+`#2`: '/' URL로 들어올 경우 tmp/app.sock을 통해 uWSGI의 app.sock으로 연결된다. uswgi는 etc/uwsgi/sites/app.ini 파일의 내용을 이용하여 장고정보를 불러온다. app.ini내에 지정한 socket 이름과(app.sock) 동일하게 설정한다. 
+
+>etc/uwsgi/sites/app.ini
+
+```python
+[uwsgi]
+chdir = /srv/app/django_app
+module = deploy_ec2.wsgi:application
+home = /home/ubuntu/.pyenv/versions/deploy_ec2
+
+uid = www-data
+gid = www-data
+
+socket = /tmp/app.sock
+chmod-socket = 666
+chown-socket = www-data:www-data
+
+enable-threads = true
+master = true
+vacuum = true
+pidfile = /tmp/app.pid
+```
+chdir는 장고와 연결되어 있는 디렉토리 정보를 가지고 있다. module에는 project의 wsgi가 등록되어 있다. 결국, chdir에 등록되어있는 경로를 찾아가서 deploy_ec2.wsgi정보를 uswgi로 반환해준다. uswgi는 소켓을 통해 요청이 들어온 곳으로 장고정보를 실어서 보내준다. 
 
 
 #### 설정파일 심볼릭 링크 생성
@@ -105,6 +128,17 @@ sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
 app에 대한 링크가 추가된 것을 확인할 수 있다. nginx가 요청을 받을 때 해당 요청에 대한 처리를 sites-enabled에서 한다. 
 >링크하는 이유를 정확히 잘 모르겠음.. 
+
+-
+
+### 도메인 설정하기 (추가 예정)
+- hosting.kr
+- www.cloudflare.com
+
+cloudflare -> Page Rules -> https 설정  
+cloudflare -> DNS -> CNAME 설정
+
+![0309-7](https://s30.postimg.org/grtwmhv4h/0309_7.png)
 
 -
 
@@ -133,5 +167,3 @@ app에 대한 링크가 추가된 것을 확인할 수 있다. nginx가 요청�
 ![0309-5](https://s9.postimg.org/b6dtqfy33/0309_5.png)
 
 11. 키를 제외한 내용들이 config파일에 저장되어 있는 것을 확인할 수 있다. 키는 credentials에 저장된다.
-
-

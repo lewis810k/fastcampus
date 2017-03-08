@@ -127,9 +127,61 @@ manage를 실행해서 다음과 같이 나오면 정상작동한다고 볼 수 
 /home/lewis/.scripts/manage:2: no such file or directory: ./manage.py
 ```
 
-## static 작업
+## static 폴더 추가하기
 
 우선 settings.py에 static 관련 설정을 해준다. 
+
+```python
+# static settings
+STATIC_ROOT = os.path.join(ROOT_DIR, 'static_root')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    STATIC_DIR,
+)
+```
+static 설정하고 나서 전체 내용을 서버로 전송한다.  
+django 내용만 바뀌었기 때문에 sudo systemctl restart uwsgi만 해도 된다.
+
+![0308-15](https://s8.postimg.org/lrpip5ulx/0308_15.png)
+
+설정이 완벽히 하지 않았기 때문에 그림 파일이 제대로 나오지 않을 것이다.
+
+![0308-16](https://s8.postimg.org/6x0xazl11/0308_16.png)
+
+관리자페이지를 들어가도 css가 적용되지 않은 것을 확인할 수 있다. 로컬 프로젝트에서 External Libraries의 site-packages/django/contrib/admin/static/admin경로로 가면 css, fonts, img, js 폴더가 있다. 로컬의 장고프로젝트는 이 경로에서 css를 비롯한 static 정보를 기본값으로 사용한다. 
+
+static 파일 경로가 여러개 존재하는데 지금 상태로는 STATICFILES_DIRS에 지정한 폴더와(따로 추가했기 때문) django.contrib.admin.static 폴더 2개를 찾는다. 우리가 해야할 작업은 이 두 폴더를 한 곳으로 미리 모아두어야 한다. 모아주는 명령어는 collectstatic이다. 
+
+```
+manage collectstatic
+```
+
+다음과 같이 static_root에 admin(django.contrib.admin)과 images(static/images)이 추가된 것을 확인할 수 있다. 
+
+![0308-17](https://s8.postimg.org/3rgbks2et/0308_17.png)
+
+.gitignore파일에 static_root/를 추가한다. 
+
+업로드된 정보를 서버로 전송한다.   
+
+### 서버에서 static 설정하기
+
+서버에서는 sudo systemctl restart uwsgi로 전송내역 반영한다. 서버에서 ./manage.py collectstatic하면 미리 되어있다는 내용이 출력될 것이다. 
+
+여기까지 해도 서버 주소를 들어가면 사진이 나오지 않는다. 그 이유는 nginx는 static파일에 접근할 때 특정 경로를 찾아가야하는데 관련 설정을 해주지 않았기 때문이다. nginx에 static location내용을 추가한다.
+
+> etc/nginx/sites-available/app
+
+```python
+sudo vi app
+
+location /static/ {
+    alias /srv/app/static_root/;
+}
+```
+sudo systemctl restart nginx 한 다음 서버주소로 들어가서 사진이 나와야 한다.
+
 
 
 

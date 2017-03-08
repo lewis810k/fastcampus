@@ -3,14 +3,15 @@
 - pgAdmin 설정하기
 - postgresql 설정
 - runserver 커스텀 명령어 만들기
-- static 폴더 추가하기
+- static 추가
+- media 추가
 
 ## pgAdmin 설정하기
 
 home/pgAdmin 디렉토리를 생성한다.  
 pgAdmin에 대한 pyenv 가상환경을 만든다.   
 ```
-wget https://ftp.postgresql.org/pub/pgadmin3/pgadmin4/v1.2/pip/pgadmin4-1.2-py3-none-any.whl
+wget https://ftp.postgresql.org/pub/pgadm-in3/pgadmin4/v1.2/pip/pgadmin4-1.2-py3-none-any.whl
 ```
 여기서 에러 발생하면 libpq-dev 설치 
 ```
@@ -199,6 +200,7 @@ location /static/ {
     alias /srv/app/static_root/;
 }
 ```
+자신의 static_root 경로를 입력한다.  
 sudo systemctl restart nginx 한 다음 서버주소로 들어가서 사진이 나와야 한다.
 
 -
@@ -284,28 +286,24 @@ media에 대한 경로설정을 해준다. 이 때 media 디렉토리 경로가 
 
 -
 
-### 데이터베이스 꼬였을 때. drop, create
+### 데이터베이스
 
--
+#### 유저생성
+```python
+sudo -u postgres createuser -s -P <username>
 
-
-
-
-
-
-
-
-
+s : superuser
+P : password
 ```
 
 
-
-
-
-
-
-
-
-
-
+#### 삭제
 ```
+sudo -u postgres dropdb <db name>
+```
+
+#### 생성 
+```
+sudo -u postgres createdb <db name> owner=<owner name>
+```
+

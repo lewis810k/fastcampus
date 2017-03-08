@@ -148,27 +148,29 @@ cloudflare -> DNS -> CNAME 설정
 -
 
 ### IAM 유저생성
-
+```
 1. AWS에서 IAM service를 클릭
 2. 좌측에 있는 Users 탭 클릭
 3. adduser
+```
 
 ![0309-2](https://s9.postimg.org/e9ejttd1r/0309_2.png)  
-
+```
 4. 원하는 username 입력
 5. Access type에서 Programmatic access 클릭한다. 내용을 보면 개발환경에 대한 access key ID와 secret access key를 활성화시킨다고 되어있다. 
 6. Next를 누르면 유저가 생성되고 키를 제공받는다.
-
+```
 ![0309-3](https://s9.postimg.org/aeb5r8tvz/0309_3.png)
-
+```
 7. pip install awscli
 8. aws configure
 9. Access Key ID, Access Key, region(ap-northeast-2), output format(json) 입력
-
+```
 ![0309-4](https://s9.postimg.org/s5ms5p9an/0309_4.png)
-
+```
 10. ~/.aws 디렉토리에 config 파일이 생긴다.
-
+```
 ![0309-5](https://s9.postimg.org/b6dtqfy33/0309_5.png)
-
+```
 11. 키를 제외한 내용들이 config파일에 저장되어 있는 것을 확인할 수 있다. 키는 credentials에 저장된다.
+```

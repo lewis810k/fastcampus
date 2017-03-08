@@ -15,11 +15,13 @@ python ~/.pyenv/versions/3.5.2/envs/pgadmin_env/lib/python3.5/site-packages/pgad
 ```
 
 ![0308-2](https://s3.postimg.org/m1lr8y27n/0308_2.png)
+
 <정상실행 메시지>
 
 `localhost:5050`에 접속해서 확인해본다. 
 
 ![0308-3](https://s14.postimg.org/yqspkx6gh/0308_3.png)
+
 <정상작동화면>
 
 ## postgresql 설정(로컬)
@@ -51,7 +53,14 @@ settings_local.json의 내용을 업데이트한다. 비밀번호는 각자가 �
 
 settings.py의 DATABASES 부분을 업데이트한다.
 
+psycopg2설치 - 이거 왜 했는지 까먹음.. 
+```
+pip install psycopg2
+migrate
+```
+
 ![0308-4](https://s14.postimg.org/vxzi0w641/0308_4.png)
+
 .conf-secret/settings_deploy.json 파일을 생성한다. 이 때 db 부분은 local.json과 동일하게 작성한다.
 
 ![0308-12](https://s17.postimg.org/tn17mv4un/0308_12.png)
@@ -94,7 +103,7 @@ home경로에서 .scripts 폴더를 생성한다.
 #!/usr/bin/zsh
 MODE='DEBUG' ./manage.py $1
 ```
-$1는 위치인자의 첫번째를 가리킨다.
+`$1`는 위치인자의 첫번째를 가리킨다. `$*`로 설정하면 모든 위치인자를 순서대로 넘겨 받는다.
 
 > 자신의 zsh경로는 which zsh로 확인할 수 있다.
 
@@ -112,8 +121,28 @@ export PATH="$PATH:$SCRIPTS_PATH"
 source ~/.zshrc
 ```
 
-manage를 실행하면 다음과 같이 나오면 정상..?
+manage를 실행해서 다음과 같이 나오면 정상작동한다고 볼 수 있다. ./manage.py가 있는 디렉토리에서 실행하면 제대로 되기 때문. 
+```
 /.scripts/manage
 /home/lewis/.scripts/manage:2: no such file or directory: ./manage.py
+```
+
+## static 작업
+
+우선 settings.py에 static 관련 설정을 해준다. 
 
 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+```

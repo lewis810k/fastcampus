@@ -1,3 +1,5 @@
+# Django Deploy(2)
+
 ### 키 관리
 
 ![0307-4](https://s9.postimg.org/qvv2ph0q7/0307_4.png)
@@ -92,34 +94,44 @@ server {
     }
 }
 ```
-`#1`에서 localhost 뒤에 ec2 주소를 추가해주고 `#2`에서 app.sock 소켓이름을 변경해준다.
+`#1`에서 localhost 뒤에 ec2 주소를 추가해주고 `#2`에서 app.sock으로 소켓이름을 변경해준다.
 
 
 #### 설정파일 심볼릭 링크 생성
 ```
 sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 ```
+![0308-1](https://s11.postimg.org/rpvkh8q1f/0308_1.png)
+
+app에 대한 링크가 추가된 것을 확인할 수 있다. nginx가 요청을 받을 때 해당 요청에 대한 처리를 sites-enabled에서 한다. 
+>링크하는 이유를 정확히 잘 모르겠음.. 
+
+-
+
+### IAM 유저생성
+
+1. AWS에서 IAM service를 클릭
+2. 좌측에 있는 Users 탭 클릭
+3. adduser
+
+![0309-2](https://s9.postimg.org/e9ejttd1r/0309_2.png)  
+
+4. 원하는 username 입력
+5. Access type에서 Programmatic access 클릭한다. 내용을 보면 개발환경에 대한 access key ID와 secret access key를 활성화시킨다고 되어있다. 
+6. Next를 누르면 유저가 생성되고 키를 제공받는다.
+
+![0309-3](https://s9.postimg.org/aeb5r8tvz/0309_3.png)
+
+7. pip install awscli
+8. aws configure
+9. Access Key ID, Access Key, region(ap-northeast-2), output format(json) 입력
+
+![0309-4](https://s9.postimg.org/s5ms5p9an/0309_4.png)
+
+10. ~/.aws 디렉토리에 config 파일이 생긴다.
+
+![0309-5](https://s9.postimg.org/b6dtqfy33/0309_5.png)
+
+11. 키를 제외한 내용들이 config파일에 저장되어 있는 것을 확인할 수 있다. 키는 credentials에 저장된다.
 
 
-
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```

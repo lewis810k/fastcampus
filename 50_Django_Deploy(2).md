@@ -1,4 +1,8 @@
 # Django Deploy(2)
+- 키 관리
+- nginx 설정
+- 도메인 연결
+- IAM 유저 생성
 
 ### 키 관리
 

@@ -97,21 +97,22 @@ MODE='DEBUG' STORAGE='S3' ./manage.py collectstatic
 -
 
 ### signature error 발생할 경우
+다음 내용을 추가한다. 
 
-settings_common.json의 aws 부분에 다음을 추가한다. 
+> settings_common.json
 ```
 "s3_signature_version": "s3v4",
 ```
-
-setting.py에도 AWS 내용을 추가한다. 
+> settings.py
 ```
 AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
-AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws'.format(AWS_STORAGE_BUCKET_NAME)
 ```
 
 -
 
 실제 S3가 저장된 url을 가지고 와야 한다. 
+
+-
 
 ### S3 주소 설정
 
@@ -119,6 +120,7 @@ S3에 업로드된 이미지에서 링크정보를 살펴보면 다음과 같다
 ```
 https://s3.ap-northeast-2.amazonaws.com/lewis-bucket/images/moon.jpg
 ```
+
 이 정보를 이용하여 settings.py의 STATIC_URL을 변경한다.   
 (S3를 사용하는 모드로 서버를 열었을 때)
 ```
@@ -137,6 +139,14 @@ if STORAGE_S3:
 
 localhost로 들어가서 이미지의 경로를 살펴보면 S3에서 받아오는 것을 확인할 수 있다. 
 
+#### manage_s3 커스텀
+> ~/.scripts/manage_s3
+```
+#!/usr/bin/zsh
+MODE='DEBUG' STORAGE='S3' ./manage.py $*
+```
+
+scripts에 대한 경로는 Django_Deploy(3)의 설정을 참고한다. 
 
 
 

@@ -49,6 +49,7 @@ INSTALLED_APPS에 'storages'추가
 ```
 
 >settings.py
+
 ```
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 
@@ -76,6 +77,7 @@ settings_common.json에서 aws 정보 입력. key정보는 ~/.aws 경로에 있�
     "s3_signature_version": "s3v4",
   }
 ```
+
 > **git 작업시 반드시 ignore되도록 해야한다.**
 
 >settings.py
@@ -154,4 +156,17 @@ scripts에 대한 경로는 Django_Deploy(3)의 설정을 참고한다.
 서버에서 실행한 다음 관리자페이지에서 프로필이미지를 다시 업로드한다. 
 
 업로드된 이미지를 클릭할 경우 이미지가 열려야 한다. 
+
+
+
+```
+
+
+
+
+
+
+
+
+```
 

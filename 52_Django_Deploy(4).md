@@ -162,7 +162,7 @@ scripts에 대한 경로는 Django_Deploy(3)의 설정을 참고한다.
 
 
 
-로컬에서 static 경로를 수정한다.
+로컬에서 static 경로를 수정한다. 우선 다음 경로에 storages.py 파일을 생성하고 내용을 입력한다.
 
 > deploy_ec2/storages.py
 
@@ -248,4 +248,3 @@ class MediaStorage(S3Boto3Storage):
 file_overwrite는 덮어쓰기에 관한 내용.
 
 모든 세팅이 완료되면 bucket의 루트에 static, media 폴더 2개만 존재한다. 
-

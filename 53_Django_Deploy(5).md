@@ -96,6 +96,42 @@ DATABASES = {
 ```
 RDS가 True이면 DB_RDS에 연결하여 데이터를 불러온다. 
 
+deploy.json과 local.json의 현재 db정보 상태는 다음과 같다. 
+
+> settings_deploy.json
+
+```python
+  "db": {
+    "engine": "django.db.backends.postgresql_psycopg2",
+    "name": "deploy_ec2",
+    "user": "lewis_db",
+    "password": "--------",
+    "host": "deploy-db.ca6ihz3f4f12.ap-northeast-2.rds.amazonaws.com",
+    "port": "5432"
+  }
+```
+
+> settings_local.json
+
+```python
+  "db": {
+    "engine": "django.db.backends.postgresql_psycopg2",
+    "name": "deploy_ec2",
+    "user": "lewis",
+    "password": "--------",
+    "host": "localhost",
+    "port": "5432"
+  },
+  "db_rds": {
+    "engine": "django.db.backends.postgresql_psycopg2",
+    "name": "deploy_ec2",
+    "user": "lewis_db",
+    "password": "--------",
+    "host": "deploy-db.ca6ihz3f4f12.ap-northeast-2.rds.amazonaws.com",
+    "port": "5432"
+  }
+```
+
 실행! 
 ```
 MODE='DEBUG' STORAGE='S3' DB='RDS' ./manage.py runserver
@@ -116,5 +152,25 @@ admin 페이지가 정상적으로 나올 것이다. 그리고 pgAdmin 에서도
 ![0309-13](https://s18.postimg.org/3k3y1cmp5/0309_13.png)
 
 
+-
 
+이제 deploy에서는 항상 rds_db가 설정된다. 서버에서 postgresql을 더이상 사용하지 않기 때문에 삭제한다. 
+```
+sudo apt-get remove postgresql
+sudo apt-get autoremove
+```
+로컬데이터를 서버로 deploy
+
+관리자페이지에서 체크해보면 시간초과로 인해(504 Error) 데이터베이스로 접속을 못할 것이다.
+
+RDS의 security group을 보면 inbound가 MyIP로만 설정되어있기 때문이 내 주소만 허용되기 때문이다. EC2에 설정된 security group id와 매칭되는 Rule를 하나 더 추가한다. 
+
+![0309-15](https://s23.postimg.org/delo04h0r/0309_15.png)
+
+이 설정을 해주면 `서버주소/admin` 페이지에 접근이 가능하다. 이미 데이터베이스를 삭제했으므로 새로운 유저를 생성한다. 
+
+로컬에서 슈퍼유저를 생성한다.(서버에서도 할 수 있음)
+```
+MODE='DEBUG' STORAGE='S3' DB='RDS' ./manage.py createsuperuser
+```
 

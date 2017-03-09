@@ -73,19 +73,25 @@ settings_common.json에서 aws 정보 입력. key정보는 ~/.aws 경로에 있�
     "secret_access_key": "",
     "s3_storage_bucket_name": "lewis-bucket"
     "s3_region": "ap-northeast-2"
+    "s3_signature_version": "s3v4",
   }
 ```
 > **git 작업시 반드시 ignore되도록 해야한다.**
 
 >settings.py
-```
+
+```python 
 AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
 AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
 AWS_STORAGE_BUCKET_NAME = config['aws']['s3_storage_bucket_name']
 AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
 ```
 
 config가 common의 내용을 합치는 코드 다음에 config에 접근해야함.
+
+AWS 서울지역으로 사용한다는 것을 알려주기 위해 AWS_S3_SIGNATURE_VERSION를 설정한다. 
 
 *** collectstatic
 
@@ -96,32 +102,15 @@ MODE='DEBUG' STORAGE='S3' ./manage.py collectstatic
 
 -
 
-### signature error 발생할 경우
-다음 내용을 추가한다. 
-
-> settings_common.json
-```
-"s3_signature_version": "s3v4",
-```
-> settings.py
-```
-AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
-```
-
--
-
-실제 S3가 저장된 url을 가지고 와야 한다. 
-
--
-
 ### S3 주소 설정
+실제 S3가 저장된 url을 가지고 와야 한다. 
 
 S3에 업로드된 이미지에서 링크정보를 살펴보면 다음과 같다. 
 ```
-https://s3.ap-northeast-2.amazonaws.com/lewis-bucket/images/moon.jpg
+https://lewis-bucket.s3.amazonaws.com/images/moon.jpg
 ```
 
-이 정보를 이용하여 settings.py의 STATIC_URL을 변경한다.   
+settings.py의 STATIC_URL을 변경한다.   
 (S3를 사용하는 모드로 서버를 열었을 때)
 ```
 if STORAGE_S3:
@@ -132,6 +121,9 @@ if STORAGE_S3:
         bucket_name=config['aws']['s3_storage_bucket_name']
     )
 ```
+
+> STATIC_URL은 static files를 불러오는 경로이다. runserver후의 이미지 경로가 조금 다른 이유는 AWS_S3_CUSTOM_DOMAIN의 주소값을 이용하기 때문이다.  ...???
+
 
 > MODE='DEBUG' STORAGE='S3' ./manage.py runserver 혹은 manage_s3 runserver
 
@@ -146,22 +138,20 @@ localhost로 들어가서 이미지의 경로를 살펴보면 S3에서 받아오
 MODE='DEBUG' STORAGE='S3' ./manage.py $*
 ```
 
+권한 변경
+```
+chmod 755 ~/.scripts/manage_s3
+```
+
 scripts에 대한 경로는 Django_Deploy(3)의 설정을 참고한다. 
 
+-
 
+#### 서버테스트
 
+로컬작업내용을 scp 명령어를 이용하여 서버로 전송한다. 
 
+서버에서 실행한 다음 관리자페이지에서 프로필이미지를 다시 업로드한다. 
 
-
-
-```
-
-
-
-
-
-
-
-
-```
+업로드된 이미지를 클릭할 경우 이미지가 열려야 한다. 
 

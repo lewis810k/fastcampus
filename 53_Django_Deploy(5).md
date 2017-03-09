@@ -1,5 +1,11 @@
 # Django Deploy(5)
 
+- RDS 인스턴스 생성
+- Security Group 설정
+- pgAdmin에서 RDS 접속
+- RDS로 migrate
+
+
 [RDS란 무엇인가?](http://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/Welcome.html)
 
 ### RDS 인스턴스 생성
@@ -38,12 +44,14 @@ FastCampus EC2 Deploy RDS의 inbound에서 rule을 추가한다.
 
 -
 
-### pgAdmin으로 RDS 접속
+### pgAdmin에서 RDS에서 접속
 
 로컬에서 pgAdmin 가상환경이 세팅된 경로로 가서 pgAdmin을 연다. 
 ```
 python ~/.pyenv/versions/3.5.2/envs/pgadmin_env/lib/python3.5/site-packages/pgadmin4/pgAdmin4.py
 ```
+`localhost:5050` 접속!
+
 어느 경로에서든 명령어가 동작하게 하려면 zsh alias를 설정한다. (추가예정)
 
 새로운 서버를 생성한다. 
@@ -57,5 +65,56 @@ python ~/.pyenv/versions/3.5.2/envs/pgadmin_env/lib/python3.5/site-packages/pgad
 connection 탭에서 host name은 RDS 인스턴스의 end point 주소를 사용한다. 이 때 마지막 포트번호는 제외하고 `.com`으로 끝나도록 한다. 
 
 나머지 정보도 RDS 생성시 입력한 정보와 동일하게 작성하고 SAVE를 누른다. 
+
+-
+
+### RDS로 migrate
+
+> settings.py
+
+```python
+DB_RDS = os.environ.get('DB') == 'RDS' 
+
+...
+if DEBUG and DB_RDS:
+    # DEBUG 모드이며 DB_RDS 옵션일 경우, 로컬 postgreSQL이 아닌 RDS로 접속해 테스트한다.
+    config_db = config['db_rds']
+else:
+    # 그 외의 경우에는 해당 db설정을 따름
+    config_db = config['db']
+
+DATABASES = {
+    'default': {
+        'ENGINE': config_db['engine'],
+        'NAME': config_db['name'],
+        'USER': config_db['user'],
+        'PASSWORD': config_db['password'],
+        'HOST': config_db['host'],
+        'PORT': config_db['port'],
+    }
+}
+```
+RDS가 True이면 DB_RDS에 연결하여 데이터를 불러온다. 
+
+실행! 
+```
+MODE='DEBUG' STORAGE='S3' DB='RDS' ./manage.py runserver
+```
+`localhost:8000/admin`으로 접속하면 에러가 발생한다. RDS에 migrate가 되지 않았기 때문이다. 
+
+migrate!
+```
+MODE='DEBUG' STORAGE='S3' DB='RDS' ./manage.py migrate
+```
+다시 실행!
+```
+MODE='DEBUG' STORAGE='S3' DB='RDS' ./manage.py runserver
+```
+
+admin 페이지가 정상적으로 나올 것이다. 그리고 pgAdmin 에서도 `table`이 다음과 같이 추가된 것을 확인할 수 있다. 
+
+![0309-13](https://s18.postimg.org/3k3y1cmp5/0309_13.png)
+
+
 
 

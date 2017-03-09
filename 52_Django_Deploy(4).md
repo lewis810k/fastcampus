@@ -2,7 +2,7 @@
 
 - boto3
 - default-storage
-- S3 주소설정
+- S3 주소설정(static, media)
 
 ### IAM user s3권한 부여
 
@@ -95,7 +95,9 @@ config가 common의 내용을 합치는 코드 다음에 config에 접근해야�
 
 AWS 서울지역으로 사용한다는 것을 알려주기 위해 AWS_S3_SIGNATURE_VERSION를 설정한다. 
 
-*** collectstatic
+> 위의 변수들이 어떻게 작동하는지 알아보려면 External Libraries/site-packages/storages/backends/s3boto3.py에 있는 S3Boto3Storage 메소드를 참고한다. 
+
+#### collectstatic
 
 ```
 MODE='DEBUG' STORAGE='S3' ./manage.py collectstatic
@@ -135,6 +137,7 @@ localhost로 들어가서 이미지의 경로를 살펴보면 S3에서 받아오
 
 #### manage_s3 커스텀
 > ~/.scripts/manage_s3
+
 ```
 #!/usr/bin/zsh
 MODE='DEBUG' STORAGE='S3' ./manage.py $*
@@ -159,14 +162,90 @@ scripts에 대한 경로는 Django_Deploy(3)의 설정을 참고한다.
 
 
 
-```
+로컬에서 static 경로를 수정한다.
 
-
-
-
-
-
-
+> deploy_ec2/storages.py
 
 ```
+class StaticStorage(S3Boto3Storage):
+    location = 'static'
+```
+
+> settings.py
+
+```
+STATICFILES_STORAGE = 'deploy_ec2.storages.StaticStorage'
+```
+STORAGE를 변경해준다.
+
+S3의 bucket의 내용을 지우고 다음 명령어를 입력한다. 
+```
+manage_s3 collectstatic
+```
+새로고침을 해보면 static 폴더가 만들어지고 static 파일들이 이 폴더 안으로 들어가있는 것을 확인할 수 있다. 
+
+기존에 업로드 된 이미지를 클릭했을 때 잘 나왔지만 경로가 변경되어서 제대로 출력되지 않을 것이다. static 경로를 수정한다.
+
+```python
+if STORAGE_S3:
+	...
+    STATICFILES_LOCATION = 'static'
+    STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+        custom_domain=AWS_S3_CUSTOM_DOMAIN,
+        staticfiles_location=STATICFILES_LOCATION,
+    )
+```
+URL을 풀어서 써보면 다음과 같다.
+```
+lewis-bucket.s3.amazonaws.com/static/
+```
+이 정보를 storages.py에도 업데이트한다. 
+
+> deploy_ec2/storages.py
+
+```
+class StaticStorage(S3Boto3Storage):
+    location = settings.STATICFILES_LOCATION
+```
+내용은 같지만 코드가 유연해지는 효과를 보인다. (유연하다 = 동적으로 움직인다.)
+
+서버로 전송해서 실행해본다.
+
+#### Media 설정
+
+관리자페이지에서 이미지를 새로 업로드하고 이미지를 클릭해보면 출력되지 않는다. 그 이유는 유저가 직접 올리는 미디어 파일의 경우 bucket에서 static폴더가 아닌 user폴더가 생성된다. 그 이유는 유저가 직접 업로드하는 파일의 **기본 업로드 경로**가 /user/이기 때문이다. 유저가 업로드하는 미디어 파일도 경로를 지정해준다. 
+
+> settings.py
+
+```python
+if STORAGE_S3:
+    STATICFILES_STORAGE = 'deploy_ec2.storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+        custom_domain=AWS_S3_CUSTOM_DOMAIN,
+        staticfiles_location=STATICFILES_LOCATION,
+    )
+
+    # Media files
+    DEFAULT_FILE_STORAGE = 'deploy_ec2.storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+    MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
+        custom_domain=AWS_S3_CUSTOM_DOMAIN,
+        mediafiles_location=MEDIAFILES_LOCATION,
+    )
+```
+
+> storages.py
+
+```python
+...
+class MediaStorage(S3Boto3Storage):
+    location = settings.MEDIAFILES_LOCATION
+    file_overwrite = False
+```
+유저가 로컬에서 직접 업로드 하는 경우 STATICFILES_STORAGE, DEFAULT_FILE_STORAGE가 사용된다. 이외에는 서버 작업시 사용되는 경로이다. collectstatic 하면 로컬에서 저장된 파일들이 S3 주소로 업로드된다.
+
+file_overwrite는 덮어쓰기에 관한 내용.
+
+모든 세팅이 완료되면 bucket의 루트에 static, media 폴더 2개만 존재한다. 
 

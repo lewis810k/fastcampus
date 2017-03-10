@@ -1,7 +1,5 @@
 # Filezilla 사용법
 
-- 
-
 ### Filezilla?
 
 > 파일질라(FileZilla)는 오픈 소스 크로스 플랫폼의 자유 소프트웨어인 FTP 소프트웨어이며 파일질라 클라이언트와 파일질라 서버로 이루어져 있다. 이진 파일은 윈도, Mac OS X, 리눅스용으로 이용할 수 있다. FTP, SFTP, FTPS (SSL/TLS 위의 FTP)를 지원한다  

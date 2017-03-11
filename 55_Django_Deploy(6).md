@@ -147,6 +147,15 @@ docker를 실행하면 주석에서 설명한 내용들을 자동으로 명령�
 docker build -t eb .
 ``` 
 
+```
+$ docker images
+
+REPOSITORY	TAG		IMAGE ID		CREATED			SIZE
+eb          latest  5aa787d8a7f1    5 seconds ago   541 MB
+eb-base     latest  1e08ad9fcfdb    22 minutes ago  510 MB
+```
+기존에 있던 eb가 바뀐 것을 확인할 수 있다.
+
 4567포트로 열고 잘 동작하는지 확인해본다. 
 ```
 docker run -p 4567:8080 eb

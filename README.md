@@ -1,5 +1,6 @@
 ### 3/10
 - 54_FileZilla_on_Ubuntu
+- 55_Django_Deploy(6) : docker 이미지 생성 및 삭제
 
 -
 

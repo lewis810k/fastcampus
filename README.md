@@ -1,3 +1,8 @@
+### 3/10
+- 54_FileZilla_on_Ubuntu
+
+-
+
 ### 3/9
 - 53_Django_Deploy(5) : RDS 인스턴스 생성 및 설정, RDS 연결
 

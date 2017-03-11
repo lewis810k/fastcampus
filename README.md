@@ -1,7 +1,7 @@
 ### 3/10
 - 54_FileZilla_on_Ubuntu
 - 55_Docker(1) : docker 이미지 생성 및 삭제
-- 56_Docker(2) : uwsgi 테스트, 로그 확인하기
+- 56_Docker(2) : uwsgi 테스트, 로그 확인하기 
 
 -
 

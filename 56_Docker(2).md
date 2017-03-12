@@ -3,6 +3,7 @@
 - uwsgi 설정 
 - 로그 확인하기
 - nginx 설정
+- Dockerfile 완성
 
 ### uwsgi 설정  
 
@@ -38,7 +39,7 @@ logger = internalservererror file:/tmp/uwsgi500.log
 ```
 app 이름을 config로 변경했기 때문에 module에서 config.uwsgi로 변경한다. 
 
-uid, gid, chown-socket은 일단 주석처리한다. 
+uid, gid, chown-socket은 일단 주석처리한다. **지금은 루트를 사용하고 있기 때문에 따로 지정하게 되면 uwsgi에서 socket에 접근 하지 못한다.**
 
 위의 설정파일을 우리가 원하는 경로로 넣어준다. 이 작업은 Dockerfile에서 처리한다. 
 
@@ -284,4 +285,38 @@ docker run --rm -it -p 5050:4040 eb
 success 후에 에러가 나지 않고 RUNNING state를 유지해야한다.
 
 그리고 밖에서 `localhost:5050`으로 접속해서 정상작동을 확인한다. 
+
+-
+
+### Dockerfile 기능 만들기
+
+```
+FROM        ubuntu:16.04
+MAINTAINER  dev@azelf.com
+
+COPY        . /srv/app
+WORKDIR     /srv/app
+
+RUN         apt-get -y update
+RUN         apt-get -y install python3
+RUN         apt-get -y install python3-pip
+RUN         apt-get -y install nginx
+RUN         apt-get -y install supervisor
+
+RUN         pip3 install -r requirements.txt
+RUN         pip3 install uwsgi
+
+COPY        .conf/uwsgi-app.ini         /etc/uwsgi/sites/app.ini
+COPY        .conf/nginx.conf            /etc/nginx/nginx.conf
+COPY        .conf/nginx-app.conf        /etc/nginx/sites-available/app.conf
+COPY        .conf/supervisor-app.conf   /etc/supervisor/conf.d/
+RUN         ln -s /etc/nginx/sites-available/app.conf   /etc/nginx/sites-enabled/app.conf
+
+
+EXPOSE      4040
+CMD         supervisord -n
+```
+Dockerfile_base에서 apt-get, pip3 install 내용을 모두 가져온다. FROM도 ubuntu:16.04로.
+
+이렇게 되면 아무것도 없는 ubuntu:16.04 이미지 위에 서버에서 돌리고자 하는 이미지를 만들 수 있다. 이것을 EC2에 올려서 돌릴 수도 있지만 개인적으로 해보길. 
 

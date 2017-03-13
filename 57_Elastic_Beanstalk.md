@@ -31,7 +31,16 @@ keypair : 리스트 중에서 사용하고 있는 keypair를 선택한다.
 
 설정을 마치면 프로젝트 내부에 .elasticbeanstalk라는 디렉토리가 생성된다. 
 
-![0313-1](https://s27.postimg.org/70qud95ir/0313_1.png)
+```
+deploy_eb_docker
+  .conf
+  .conf-secret
+  .elasticbeanstalk   # 
+    config.yml        # 추가
+  django_app
+  ...
+  ...
+```
 
 그리고 config.yml에는 설정했던 내용들이 들어있다.
 

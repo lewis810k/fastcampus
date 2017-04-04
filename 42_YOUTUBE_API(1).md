@@ -12,7 +12,7 @@ django_app 폴더와 동일한 레벨에서 .conf라는 폴더를 생성한다.
 ```python
 {
   "youtube": {
-    "API_KEY": "AIzaSyDh8WWytKv8YYpvZYFRSL3nGbPaI_aEY_4"
+    "API_KEY": "------------AIzY_4"
   }
 }
 ```

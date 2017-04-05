@@ -7,15 +7,13 @@
 `https://address.com/api`
 
 ## API 목록
-
+- Obtain Token
 - Member
 	- [Signup](#signup)
 	- [Login](#login)
+	- [Facebook Login](#facebook-login)
 	- [Logout](#logout)
-	- Facebook Signup
-	- Facebook Login
-	- Facebook Logout
-	- UserDetail
+	- [UserDetail](#userdetail)
 - Talent
 	- [Talent List]()
 	- [Talent Retrieve Detail - all]() 
@@ -27,6 +25,7 @@
   		- [Talent Location]()
   		- [Talent Curriculum]()
   		- [Talent Class Image]()
+
 
 ## Signup
 
@@ -185,7 +184,63 @@ None
 ### Error Response
 rest-auth에서 자동적으로 Error에 대한 처리를 하지 않기 때문에 커스터마이징 필요
 
-      
+---
+
+## Facebook Login
+
+### URL
+
+`/api/member/fb_login/`
+
+### Method
+
+`POST`
+
+### URL Params
+
+None
+
+### Data Params
+
+Key|Value
+---|---
+access_token|Token Key Value
+
+### Success Response
+
+- Code: 200
+- Content
+
+Token Key Value
+
+```python
+{
+  "key": "b8a2ce3996515dfe26982cdbfdb90f59a0c2d653"
+}
+```
+
+### Error Response
+- Code: 400
+	- Reason
+		- 필수항목 누락
+		- 잘못된 토큰 값
+	- Content
+
+```python
+{
+  "non_field_errors": [
+    "Incorrect input. access_token is required."
+  ]
+}
+```
+
+```python
+{
+  "non_field_errors": [
+    "Incorrect value"
+  ]
+}
+```
 
 ## Talent List
 ### URL

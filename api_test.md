@@ -4,7 +4,7 @@
 
 ## API Base
 
-`https://address.com/api`
+`https://mozzi.co.kr/api`
 
 ## API 목록
 - Obtain Token
@@ -18,10 +18,12 @@
 	- [Talent List](#talent-list)
 	- [Talent Detail Retrieve All](#talent-detail-retrieve-all) 
 	- [Talent Detail Retrieve Fragments](#talent-detail-retrieve-fragments)
-  		- [Talent Detail Short Retreive](#talent-detail-short-retrieve)
-  		- [Talent Location Retreive](#talent-location-retrieve)
-  		- [Talent Curriculum Retreive](#talent-curriculum-retrieve)
-  		- [Talent Class Image Retreive](#talent-class-image-retrieve)
+  		- [Talent Detail Short Retrieve](#talent-detail-short-retrieve)
+  		- [Talent Location Retrieve](#talent-location-retrieve)
+  		- [Talent Curriculum Retrieve](#talent-curriculum-retrieve)
+  		- [Talent Class Image Retrieve](#talent-class-image-retrieve)
+  		- [Talent Review Retrieve](#talent-review-retrieve)
+  		- [Talent Registration Retrieve](#talent-registration-retrieve)
 
 > **Talent Detail Retrieve All**  
 > - 하나의 수업 정보에 대한 모든 세부정보 retrieve
@@ -33,11 +35,15 @@
 
 ### URL
 
-`/api/member/token-auth/`
+`/member/token-auth/`
 
 ### Method
 
 `POST`
+
+### Header
+
+None
 
 ### URL Params
 
@@ -64,7 +70,7 @@ key|Value
 
 Token Key Value
 
-```python
+```Json
 {
   "key": "3a9fcdcf85afbf783ad5ffed3a3966dc07314acd"
 }
@@ -77,7 +83,7 @@ Token Key Value
 		- 정보 불일치
 	- Content
 
-```python
+```Json
 {
   "username": [
     "이 항목을 채워주십시오."
@@ -85,7 +91,7 @@ Token Key Value
 }
 ```
 
-```python
+```Json
 {
   "non_field_errors": [
     "제공된 인증데이터(credentials)로는 로그인할 수 없습니다."
@@ -99,11 +105,15 @@ Token Key Value
 
 ### URL
 
-`/api/member/signup/`
+`/member/signup/`
 
 ### Method
 
 `POST`
+
+### Header
+
+None
 
 ### URL Params
 
@@ -124,7 +134,7 @@ key|Description|Type
 
 Token Key Value
 
-```python
+```Json
 {
   "key": "3a9fcdcf85afbf783ad5ffed3a3966dc07314acd"
 }
@@ -138,7 +148,7 @@ Token Key Value
 		- password 불일치
 	- Content
 	 
-```python
+```Json
 {
   "username": [
     "해당 사용자 이름은 이미 존재합니다."
@@ -146,7 +156,7 @@ Token Key Value
 }
 ```
 
-```python
+```Json
 {
   "non_field_errors": [
     "비밀번호가 일치하지 않습니다."
@@ -154,7 +164,7 @@ Token Key Value
 }
 ```
 
-```python
+```Json
 {
   "password2": [
     "이 항목을 채워주십시오."
@@ -170,11 +180,15 @@ name 필드에 대한 에러메시지 커스터마이징 필요.
 
 ### URL
 
-`/api/member/login/`
+`/member/login/`
 
 ### Method
 
 `GET`
+
+### Header
+
+None
 
 ### URL Params
 
@@ -193,7 +207,7 @@ None
 
 Token Key Value
 
-```python
+```Json
 {
   "key": "36ddf1824a5c7aaca5977bbe65962566a17fb86f"
 }
@@ -204,7 +218,7 @@ Token Key Value
 	- Reason: 인증 실패
 	- Content
 
-```python
+```Json
 {
   "non_field_errors": [
     "제공된 인증데이터(credentials)로는 로그인할 수 없습니다."
@@ -220,7 +234,7 @@ Token Key Value
 
 ### URL
 
-`/api/member/logout/`
+`/member/logout/`
 
 ### Method
 
@@ -243,7 +257,7 @@ None
 - Code: 200
 - Content
 
-```python
+```Json
 {
   "detail": "Successfully logged out."
 }
@@ -258,11 +272,15 @@ rest-auth에서 자동적으로 Error에 대한 처리를 하지 않기 때문�
 
 ### URL
 
-`/api/member/fb_login/`
+`/member/fb_login/`
 
 ### Method
 
 `POST`
+
+### Header
+
+None
 
 ### URL Params
 
@@ -281,7 +299,7 @@ access_token|Token Key Value
 
 Token Key Value
 
-```python
+```Json
 {
   "key": "b8a2ce3996515dfe26982cdbfdb90f59a0c2d653"
 }
@@ -294,7 +312,7 @@ Token Key Value
 		- 잘못된 토큰 값
 	- Content
 
-```python
+```Json
 {
   "non_field_errors": [
     "Incorrect input. access_token is required."
@@ -302,7 +320,7 @@ Token Key Value
 }
 ```
 
-```python
+```Json
 {
   "non_field_errors": [
     "Incorrect value"
@@ -319,6 +337,10 @@ Token Key Value
 
 `GET`
 
+### Header
+
+None
+
 ### URL Params
 
 None
@@ -332,7 +354,7 @@ None
 - Code: 200
 - Content
 
-```json
+```Json
 {
   "next": "http://localhost:8000/api/talent/list/?cursor=cD0yMDE3LTAzLTMxKzA4JTNBNTglM0EwMS43NzA5NzYlMkIwMCUzQTAw",
   "previous": null,
@@ -587,22 +609,26 @@ None
 
 ```Json
 {
-  "id": 27,
-  "title": "신나게 배우는 영어 회화",
-  "category": "외국어",
+  "id": 3,
+  "title": "바리스타 마스터 코스",
+  "category": "이색취미",
   "type": "그룹 수업",
   "locations": [
     {
-      "region": "강남",
+      "region": "신촌",
       "specific_location": "협의 후 결정",
-      "registered_student": [
-        3,
-        8
-      ],
-      "day": "토",
-      "time": "12:40-13:40",
-      "extra_fee": "Y",
-      "extra_fee_amount": "스터디 룸 비용"
+      "day": "월",
+      "time": "12-14",
+      "extra_fee": "N",
+      "extra_fee_amount": ""
+    },
+    {
+      "region": "사당",
+      "specific_location": "협의 후 결정",
+      "day": "화",
+      "time": "14-16",
+      "extra_fee": "N",
+      "extra_fee_amount": ""
     }
   ]
 }
@@ -734,3 +760,150 @@ None
 }
 ```
 
+## Talent Review Retrieve
+
+### URL
+
+`talent/detail/<talent_pk>/review/`
+
+### Method
+
+`GET`
+
+### Header
+
+None
+
+### URL Params
+
+None
+
+### Data Params
+
+None
+
+### Success Response
+
+- Code: 200
+- Content
+
+```
+{
+  "id": 3,
+  "title": "바리스타 마스터 코스",
+  "category": "이색취미",
+  "type": "그룹 수업",
+  "average_rate": 2.6,
+  "reviews": [
+    {
+      "talent": "바리스타 마스터 코스",
+      "name": "lewis",
+      "curriculum": 1,
+      "readiness": 2,
+      "timeliness": 3,
+      "delivery": 1,
+      "friendliness": 5,
+      "created_date": "2017-04-05T06:17:18.220127Z",
+      "comment": "정말 유익한 수업이었습니다."
+    },
+    {
+      "talent": "바리스타 마스터 코스",
+      "name": "admin",
+      "curriculum": 1,
+      "readiness": 1,
+      "timeliness": 3,
+      "delivery": 4,
+      "friendliness": 5,
+      "created_date": "2017-04-05T05:48:05.328047Z",
+      "comment": "친구들에게 추천해주고 싶은 수업입니다."
+    }
+  ]
+}
+```
+
+### Error Response
+- Code: 404
+	- Reason: Invalid Talent pk
+	- Content
+
+```
+{
+  "detail": "찾을 수 없습니다."
+}
+```
+
+## Talent Registration Retrieve
+
+### URL
+
+`talent/detail/<talent_pk>/registration/`
+
+### Method
+
+`GET`
+
+### Header
+
+None
+
+### URL Params
+
+None
+
+### Data Params
+
+None
+
+### Success Response
+
+- Code: 200
+- Content
+
+```
+{
+  "id": 3,
+  "title": "바리스타 마스터 코스",
+  "category": "이색취미",
+  "type": "그룹 수업",
+  "registration": [
+    {
+      "name": "박지성",
+      "talent_location": "신촌",
+      "student_level": "초/중급자",
+      "experience_length": 2,
+      "is_confirmed": false,
+      "joined_date": "2017-04-05T05:51:01.205418Z",
+      "message_to_tutor": "잘 부탁드립니다"
+    },
+    {
+      "name": "김연아",
+      "talent_location": "사당",
+      "student_level": "입문자",
+      "experience_length": 0,
+      "is_confirmed": false,
+      "joined_date": "2017-04-05T06:12:30.950423Z",
+      "message_to_tutor": "잘 부탁드려요"
+    },
+    {
+      "name": "lewis",
+      "talent_location": "사당",
+      "student_level": "입문자",
+      "experience_length": 0,
+      "is_confirmed": false,
+      "joined_date": "2017-04-05T06:13:53.883964Z",
+      "message_to_tutor": ""
+    }
+  ]
+}
+```
+
+### Error Response
+- Code: 404
+	- Reason: Invalid Talent pk
+	- Content
+
+```
+{
+  "detail": "찾을 수 없습니다."
+}
+```

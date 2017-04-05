@@ -17,10 +17,11 @@
 - Talent
 	- [Talent List](#talent-list)
 	- [Talent Retrieve Detail - all]() 
-	> 하나의 수업 정보에 대한 모든 세부정보 retrieve
+		> 하나의 수업 정보에 대한 모든 세부정보 retrieve
     
 	- Talent Retrieve Detail - fragmented version
-  	> 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
+  		> 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
+  		
   		- [Talent Detail Short](#talent-detail-short)
   		- [Talent Location](#talent-location)
   		- [Talent Curriculum](#talent-curriculum)

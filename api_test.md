@@ -17,7 +17,7 @@
 - Talent
 	- [Talent List](#talent-list)
 	- [Talent Detail Retrieve All](#talent-detail-retrieve-all) 
-	- [Talent Retrieve Detail Fragments]()
+	- [Talent Detail Retrieve Fragments](#talent-detail-retrieve-fragments)
   		- [Talent Detail Short Retreive](#talent-detail-short-retrieve)
   		- [Talent Location Retreive](#talent-location-retrieve)
   		- [Talent Curriculum Retreive](#talent-curriculum-retrieve)
@@ -334,60 +334,59 @@ None
 
 ```json
 {
-  "next": "http://127.0.0.1:8000/api/talent/list/?cursor=cD1hYWElNDBnbWFpbC5jb20%3D",
+  "next": "http://localhost:8000/api/talent/list/?cursor=cD0yMDE3LTAzLTMxKzA4JTNBNTglM0EwMS43NzA5NzYlMkIwMCUzQTAw",
   "previous": null,
   "results": [
     {
+      "pk": 1,
       "tutor": {
         "pk": 2,
-        "username": "ync@gmail.com",
-        "name": "이수연",
-        "nickname": "프로신",
-        "user": 2,
+        "user_id": "admin",
+        "name": "",
+        "nickname": "",
         "is_verified": false,
-        "profile_image": "https://projectgori.s3.amazonaws.com/media/member/profile_image/nginx_uwsgi_server.png",
-        "cellphone": "01099939393"
+        "profile_image": null,
+        "cellphone": ""
       },
-      "title": "신나게 배우는 영어 회화",
-      "category_name": "외국어",
-      "type_name": "그룹 수업",
-      "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/KakaoTalk_Photo_2017-03-29-23-05-12_76_coUxPZe.jpeg",
-      "price_per_hour": 15000,
-      "hours_per_class": 2,
-      "number_of_class": 4,
-      "is_soldout": false,
-      "created_date": "2017-03-31T07:17:58.762986Z",
-      "review_count": 0,
-      "locations": [
-        "강남"
-      ],
-      "registration_count": 2
-    },
-    {
-      "tutor": {
-        "pk": 3,
-        "username": "aaa@gmail.com",
-        "name": "박정인",
-        "nickname": "pro-s",
-        "user": 3,
-        "is_verified": false,
-        "profile_image": "https://projectgori.s3.amazonaws.com/media/psdlf.png",
-        "cellphone": "02030303034"
-      },
-      "title": "파이선 입문 수업",
+      "title": "파이썬 장고",
       "category_name": "컴퓨터",
       "type_name": "그룹 수업",
-      "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/eb_strcut.jpg",
-      "price_per_hour": 12000,
+      "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/article.jpg",
+      "price_per_hour": 1,
       "hours_per_class": 1,
-      "number_of_class": 4,
+      "number_of_class": 1,
       "is_soldout": false,
-      "created_date": "2017-04-04T06:39:23.423456Z",
+      "created_date": "2017-03-31T08:51:55.257701Z",
       "review_count": 0,
       "locations": [
-        "홍익대"
-      ],
-      "registration_count": 1
+        "강남",
+        "종로"
+      ]
+    },
+    {
+      "pk": 2,
+      "tutor": {
+        "pk": 2,
+        "user_id": "admin",
+        "name": "",
+        "nickname": "",
+        "is_verified": false,
+        "profile_image": null,
+        "cellphone": ""
+      },
+      "title": "영화보자",
+      "category_name": "미술 / 음악",
+      "type_name": "원데이 수업",
+      "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/beuxnVcF.jpg",
+      "price_per_hour": 1,
+      "hours_per_class": 1,
+      "number_of_class": 1,
+      "is_soldout": false,
+      "created_date": "2017-03-31T08:58:01.770976Z",
+      "review_count": 0,
+      "locations": [
+        "사당"
+      ]
     }
   ]
 }
@@ -421,57 +420,60 @@ None
 - Content
 
 ```Json
-{
+
   "tutor": {
-    "pk": 2,
-    "username": "ync@gmail.com",
-    "name": "이수연",
-    "nickname": "프로신",
-    "user": 2,
-    "is_verified": false,
-    "profile_image": "https://projectgori.s3.amazonaws.com/media/member/profile_image/nginx_uwsgi_server.png",
-    "cellphone": "01099939393"
+    "pk": 89,
+    "user_id": "test_api@gmail.com",
+    "name": "lewis",
+    "nickname": "",
+    "is_verified": true,
+    "profile_image": null,
+    "cellphone": ""
   },
-  "title": "신나게 배우는 영어 회화",
-  "category": "LAN",
-  "category_name": "외국어",
+  "title": "바리스타 마스터 코스",
+  "category": "HOB",
+  "category_name": "이색취미",
   "type": 1,
-  "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/KakaoTalk_Photo_2017-03-29-23-05-12_76_coUxPZe.jpeg",
-  "tutor_info": "저는 캐나다에서 살다왔어요~ 재밌게 수업을 진행하고 싶습니다.",
-  "class_info": "그룹으로 서로 free talking하며 자연스럽게 대화를 통해 영어를 배우실 수 있어요. 짧은 미드 영상을 보며 공부하는 시간도 가질 예정입니다.",
-  "video1": "https://www.youtube.com/watch?v=KzJYbaAp7eQ",
+  "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/article_rEC7reP.jpg",
+  "tutor_info": "바빈스키",
+  "class_info": "바빈스키가 직접 알려줌",
+  "video1": "https://www.youtube.com/watch?v=t8YXut6_56c",
   "video2": "",
   "location": [
     {
-      "region": "강남",
+      "region": "신촌",
       "specific_location": "협의 후 결정",
-      "registered_student": [
-        3,
-        8
-      ],
-      "day": "토",
-      "time": "12:40-13:40",
-      "extra_fee": "Y",
-      "extra_fee_amount": "스터디 룸 비용"
+      "day": "월",
+      "time": "12-14",
+      "extra_fee": "N",
+      "extra_fee_amount": ""
+    },
+    {
+      "region": "사당",
+      "specific_location": "협의 후 결정",
+      "day": "화",
+      "time": "14-16",
+      "extra_fee": "N",
+      "extra_fee_amount": ""
     }
   ],
-  "price_per_hour": 15000,
+  "price_per_hour": 10,
   "hours_per_class": 2,
-  "number_of_class": 4,
+  "number_of_class": 8,
   "is_soldout": false,
   "class_image": [
     {
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/extra_images/static_loaded_bucket.png"
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/extra_images/moon4.jpg"
     }
   ],
   "curriculum": [
     {
-      "information": "1주차에는 소개",
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/ec2_diagram.png"
+      "information": "원두 로스팅",
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/moon3.jpg"
     },
     {
-      "information": "2주차는 프리 토킹",
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/docker_flow.jpg"
+      "information": "내리기",
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/moon1.jpg"
     }
   ]
 }
@@ -521,26 +523,25 @@ None
 ```Json
 {
   "tutor": {
-    "pk": 2,
-    "username": "ync@gmail.com",
-    "name": "이수연",
-    "nickname": "프로신",
-    "user": 2,
-    "is_verified": false,
-    "profile_image": "https://projectgori.s3.amazonaws.com/media/member/profile_image/nginx_uwsgi_server.png",
-    "cellphone": "01099939393"
+    "pk": 89,
+    "user_id": "test_api@gmail.com",
+    "name": "lewis",
+    "nickname": "",
+    "is_verified": true,
+    "profile_image": null,
+    "cellphone": ""
   },
-  "title": "신나게 배우는 영어 회화",
-  "category_name": "외국어",
-  "type": 1,
-  "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/KakaoTalk_Photo_2017-03-29-23-05-12_76_coUxPZe.jpeg",
-  "tutor_info": "저는 캐나다에서 살다왔어요~ 재밌게 수업을 진행하고 싶습니다.",
-  "class_info": "그룹으로 서로 free talking하며 자연스럽게 대화를 통해 영어를 배우실 수 있어요. 짧은 미드 영상을 보며 공부하는 시간도 가질 예정입니다.",
-  "video1": "https://www.youtube.com/watch?v=KzJYbaAp7eQ",
+  "title": "바리스타 마스터 코스",
+  "category_name": "이색취미",
+  "type": "그룹 수업",
+  "cover_image": "https://projectgori.s3.amazonaws.com/media/talent/cover_image/article_rEC7reP.jpg",
+  "tutor_info": "바빈스키",
+  "class_info": "바빈스키가 직접 알려줌",
+  "video1": "https://www.youtube.com/watch?v=t8YXut6_56c",
   "video2": "",
-  "price_per_hour": 15000,
+  "price_per_hour": 10,
   "hours_per_class": 2,
-  "number_of_class": 4,
+  "number_of_class": 8,
   "is_soldout": false
 }
 ```
@@ -648,18 +649,18 @@ None
 
 ```Json
 {
-  "id": 27,
-  "title": "신나게 배우는 영어 회화",
-  "category": "외국어",
+  "id": 3,
+  "title": "바리스타 마스터 코스",
+  "category": "이색취미",
   "type": "그룹 수업",
   "curriculum": [
     {
-      "information": "1주차에는 소개",
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/ec2_diagram.png"
+      "information": "원두 로스팅",
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/moon3.jpg"
     },
     {
-      "information": "2주차는 프리 토킹",
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/docker_flow.jpg"
+      "information": "내리기",
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/curriculum/moon1.jpg"
     }
   ]
 }
@@ -706,16 +707,16 @@ None
 
 ```Json
 {
-  "id": 27,
-  "title": "신나게 배우는 영어 회화",
-  "category": "외국어",
+  "id": 3,
+  "title": "바리스타 마스터 코스",
+  "category": "이색취미",
   "type": "그룹 수업",
   "class_image": [
     {
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/extra_images/static_loaded_bucket.png"
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/extra_images/moon4.jpg"
     },
     {
-      "image": "https://projectgori.s3.amazonaws.com/media/talent/extra_images/docker_flow.jpg"
+      "image": "https://projectgori.s3.amazonaws.com/media/talent/extra_images/moon5.jpg"
     }
   ]
 }

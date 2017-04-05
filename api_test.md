@@ -16,16 +16,17 @@
 	- [UserDetail](#userdetail)
 - Talent
 	- [Talent List](#talent-list)
-	- [Talent Retrieve Detail - all]() 
-		> 하나의 수업 정보에 대한 모든 세부정보 retrieve
-    
-	- Talent Retrieve Detail - fragmented version
-  		> 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
-  		
-  		- [Talent Detail Short](#talent-detail-short)
-  		- [Talent Location](#talent-location)
-  		- [Talent Curriculum](#talent-curriculum)
-  		- [Talent Class Image](#talent-class-image)
+	- [Talent Detail Retrieve All](#talent-detail-retrieve-all) 
+	- [Talent Retrieve Detail Fragments]()
+  		- [Talent Detail Short Retreive](#talent-detail-short-retrieve)
+  		- [Talent Location Retreive](#talent-location-retrieve)
+  		- [Talent Curriculum Retreive](#talent-curriculum-retrieve)
+  		- [Talent Class Image Retreive](#talent-class-image-retrieve)
+
+> **Talent Detail Retrieve All**  
+- 하나의 수업 정보에 대한 모든 세부정보 retrieve  
+**Talent Retrieve Detail Fragments**  
+- 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
 
 ## Obtain Token
 
@@ -391,7 +392,7 @@ None
 }
 ```
 
-## Talent Detail -all Retrieve
+## Talent Detail Retrieve All
 
 ### URL
 
@@ -487,7 +488,7 @@ None
 }
 ```
 
-## Talent Detail Retrieve - fragmented
+## Talent Detail Retrieve Fragments
 
 ## Talent Detail Short Retrieve
 

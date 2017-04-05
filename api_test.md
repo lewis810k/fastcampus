@@ -15,17 +15,82 @@
 	- [Logout](#logout)
 	- [UserDetail](#userdetail)
 - Talent
-	- [Talent List]()
+	- [Talent List](#talent-list)
 	- [Talent Retrieve Detail - all]() 
 	> 하나의 수업 정보에 대한 모든 세부정보 retrieve
     
 	- Talent Retrieve Detail - fragmented version
-  		> 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
-  		- [Talent Detail Short]()
-  		- [Talent Location]()
-  		- [Talent Curriculum]()
-  		- [Talent Class Image]()
+  	> 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
+  		- [Talent Detail Short](#talent-detail-short)
+  		- [Talent Location](#talent-location)
+  		- [Talent Curriculum](#talent-curriculum)
+  		- [Talent Class Image](#talent-class-image)
 
+## Obtain Token
+
+### URL
+
+`/api/member/token-auth/`
+
+### Method
+
+`POST`
+
+### URL Params
+
+None
+
+### Data Params
+
+#### 1. 일반유저
+
+key|Description|Type
+---|---|---
+**username**|회원가입하는 사용자 이메일|String
+**password**|패스워드|String
+
+#### 2. 페이스북 유저
+ 
+key|Value
+---|---
+**access_token**|Token Key Value
+
+### Success Response
+- Code: 201
+- Content
+
+Token Key Value
+
+```python
+{
+  "key": "3a9fcdcf85afbf783ad5ffed3a3966dc07314acd"
+}
+```
+
+### Error Response
+- Code: 400
+	- Reason
+		- 필수항목 누락
+		- 정보 불일치
+	- Content
+
+```python
+{
+  "username": [
+    "이 항목을 채워주십시오."
+  ]
+}
+```
+
+```python
+{
+  "non_field_errors": [
+    "제공된 인증데이터(credentials)로는 로그인할 수 없습니다."
+  ]
+}
+```
+
+---
 
 ## Signup
 
@@ -493,7 +558,7 @@ None
 
 ### URL
 
-`/talent/detail/location/<talent_pk>/`
+`/talent/detail/<talent_pk>/location/`
 
 ### Method
 
@@ -555,7 +620,7 @@ None
 
 ### URL
 
-`/talent/detail/curriculum/<talent_pk>/`
+`/talent/detail/<talent_pk>/curriculum/`
 
 ### Method
 
@@ -613,7 +678,7 @@ None
 
 ### URL
 
-`/talent/detail/classimage/<talent_pk>/`
+`/talent/detail/<talent_pk>/class-image/`
 
 ### Method
 

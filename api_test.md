@@ -24,7 +24,8 @@
   		- [Talent Class Image Retreive](#talent-class-image-retrieve)
 
 > **Talent Detail Retrieve All**  
-> - 하나의 수업 정보에 대한 모든 세부정보 retrieve  
+> - 하나의 수업 정보에 대한 모든 세부정보 retrieve
+  
 > **Talent Retrieve Detail Fragments**  
 > - 하나의 수업 정보의 세부정보를 여러 api로 세분화하여 retrieve
 

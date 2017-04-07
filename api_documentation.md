@@ -143,9 +143,9 @@ Token Key Value
 ### Error Response
 - Code: 400
 	- Reason
-		- 필수항목 누락
 		- username 중복
 		- password 불일치
+		- 필수항목 누락
 	- Content
 	 
 ```Json
@@ -168,11 +168,12 @@ Token Key Value
 {
   "password2": [
     "이 항목을 채워주십시오."
+  ],
+  "name": [
+    "이 항목을 채워주십시오."
   ]
 }
 ```
-
-name 필드에 대한 에러메시지 커스터마이징 필요.
 
 ---
 
@@ -215,7 +216,8 @@ Token Key Value
 
 ### Error Response
 - Code: 400
-	- Reason: 인증 실패
+	- Reason
+		- 인증 실패
 	- Content
 
 ```Json
@@ -264,7 +266,22 @@ None
 ```
 
 ### Error Response
-rest-auth에서 자동적으로 Error에 대한 처리를 하지 않기 때문에 커스터마이징 필요
+- Code: 401
+	- Reason
+		- 만료되었거나 잘못된 토큰
+	- Content
+
+```Json
+{
+  "detail": "토큰이 유효하지 않습니다."
+}
+```
+
+```Json
+{
+  "detail": "토큰이 제공되지 않았습니다."
+}
+```
 
 ---
 
@@ -309,7 +326,7 @@ Token Key Value
 - Code: 400
 	- Reason
 		- 필수항목 누락
-		- 잘못된 토큰 값
+		- 잘못된 토큰 정보
 	- Content
 
 ```Json
@@ -327,6 +344,63 @@ Token Key Value
   ]
 }
 ```
+
+## User Detail Retrieve
+
+### URL
+
+`/member/profile/user/`
+
+### Method
+
+`GET`
+
+### Header
+
+Key|Value
+---|---
+Authorization|Token [Token Key Value]
+
+### URL Params
+
+None
+
+### Data Params
+
+None
+
+### Success Response
+- Code: 200
+- Content
+
+```Json
+{
+  "pk": 2,
+  "user_id": "admin",
+  "name": "어드민",
+  "user_type": "Django",
+  "is_staff": true,
+  "is_active": true,
+  "cellphone": "01012345678",
+  "profile_image": "https://projectgori.s3.amazonaws.com/media/member/profile_image/article.jpg",
+  "joined_date": "2017-03-30T08:45:41.606558Z",
+  "is_tutor": false,
+  "last_login": "2017-04-04T09:09:25Z"
+}
+```
+
+### Error Response
+- Code: 401
+	- Reason: 잘못된 토큰 정보
+	- Content
+
+```Json
+{
+  "detail": "토큰이 유효하지 않습니다."
+}
+```
+
+---
 
 ## Talent List
 ### URL
